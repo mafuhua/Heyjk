@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:background="#450000FF">
+
+        <ImageView
+            android:id="@+id/btn_return"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:src="@drawable/btn_return2x"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_title_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="体重测量"
+            android:textColor="#ffffff"
+            android:textSize="33sp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/btn_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="10dp"
+            android:src="@drawable/btn_confirm2x"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/app_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:layout_width="75dp"
+                android:layout_height="45dp"
+                android:src="@drawable/img_logo2x" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="云健康"
+                android:textColor="#ffffff"
+                android:textSize="33sp" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

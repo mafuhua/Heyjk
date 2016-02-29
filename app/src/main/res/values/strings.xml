@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">海尔云健康</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_weight_test">WeightTestActivity</string>
+    <string name="title_activity_setting_sex">SettingSexActivity</string>
+    <string name="title_activity_setting_birthday">SettingBirthdayActivity</string>
+    <string name="title_activity_setting_height">SettingHeightActivity</string>
+    <string name="title_activity_setting_weight">SettingWeightActivity</string>
+    <string name="title_activity_setting_sport">SettingSportActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+</resources>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/layout_bottom"
+    android:layout_height="55dp"
+    android:orientation="vertical">
+    <View
+        android:layout_width="fill_parent"
+        android:background="@android:color/black"
+        android:layout_height="0.3dp"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_measure"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_measure"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:background="@drawable/tab_01_n2x" />
+
+            <TextView
+                android:id="@+id/tv_measure"
+                android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:text="测量"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_history"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_history"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:background="@drawable/tab_02_n2x" />
+
+            <TextView
+                android:id="@+id/tv_history"
+                android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:text="历史"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_curve"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_curve"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:background="@drawable/tab_03_n2x" />
+
+            <TextView
+                android:id="@+id/tv_curve"
+                android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:text="曲线"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_setting"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_setting"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:background="@drawable/tab_04_n2x" />
+
+            <TextView
+                android:id="@+id/tv_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="设置"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

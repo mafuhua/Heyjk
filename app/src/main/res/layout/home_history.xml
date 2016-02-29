@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/layout_titlebar"
+        layout="@layout/layout_titlebar" />
+
+    <include
+        android:id="@+id/layout_history_sectitle"
+        layout="@layout/layout_history_sectitle" />
+
+    <include
+        android:id="@+id/layout_history_thirdtitle"
+        layout="@layout/layout_history_thirdtitle" />
+    <LinearLayout
+        android:id="@+id/ll_history_content"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+
+        <ExpandableListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/expandableListView" />
+    </LinearLayout>
+
+</LinearLayout>

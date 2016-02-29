@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_history_sectitle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#450000FF"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="240dp"
+        android:layout_height="0.1dp"
+        android:layout_gravity="center"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:layout_width="240dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0.1dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black" />
+
+        <Button
+            android:id="@+id/btn_day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:text="日" />
+
+        <View
+            android:layout_width="0.1dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black" />
+
+        <Button
+            android:id="@+id/btn_week"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:text="周" />
+
+        <View
+            android:layout_width="0.1dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black" />
+
+        <Button
+            android:id="@+id/btn_month"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:text="月" />
+
+        <View
+            android:layout_width="0.1dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="240dp"
+        android:layout_height="0.1dp"
+        android:layout_gravity="center"
+        android:background="@android:color/black" />
+</LinearLayout>

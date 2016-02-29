@@ -1,0 +1,120 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:text="注册"
+            android:textColor="#ffffff"
+            android:textSize="30sp" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="110dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="72dp"
+            android:background="@color/blue" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <EditText
+            android:id="@+id/et_login_num"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:hint="请输入手机号" />
+
+        <EditText
+            android:textSize="30sp"
+            android:id="@+id/et_login_psw"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入密码"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/blue"
+            android:text="登录"
+            android:textSize="30sp"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/blue"
+            android:text="手机号快速注册"
+            android:textSize="30sp"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/icon_n2x"
+        android:layout_height="30dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="记住密码"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="忘记密码"
+        android:layout_marginLeft="52dp"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"/>
+</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="快捷登录"
+        android:layout_marginTop="10dp"
+        android:textSize="30sp" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/icon_qq" />
+
+        <ImageButton
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/icon_wx" />
+    </RelativeLayout>
+</LinearLayout>

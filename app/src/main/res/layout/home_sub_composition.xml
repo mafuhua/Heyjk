@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/center"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/img_01_tichengfen2x" />
+
+    <ImageView
+        android:id="@+id/centerdown"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_below="@id/center"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/img_01_tichengfen2x" />
+
+    <ImageView
+        android:id="@+id/centerup"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_above="@id/center"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="40dp"
+        android:src="@drawable/img_01_tichengfen2x" />
+
+    <ImageView
+        android:id="@+id/leftup"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_above="@id/center"
+        android:layout_marginBottom="-45dp"
+        android:layout_marginLeft="15dp"
+        android:src="@drawable/img_01_tichengfen2x" />
+
+    <ImageView
+        android:id="@+id/rightup"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_above="@id/center"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="-40dp"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/img_01_tichengfen2x" />
+
+    <ImageView
+        android:id="@+id/leftdown"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_above="@id/center"
+        android:layout_marginBottom="-195dp"
+        android:layout_marginLeft="15dp"
+        android:src="@drawable/img_01_tichengfen2x" />
+
+    <ImageView
+        android:id="@+id/rightdown"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_above="@id/center"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="-200dp"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/img_01_tichengfen2x" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/leftup"
+        android:layout_marginLeft="5dp"
+        android:text="脂肪率"
+        android:textSize="33sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/leftup"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:text="水分量"
+        android:textSize="33sp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/centerdown"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        android:text="骨量"
+        android:textSize="33sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/centerdown"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:text="内脏等级"
+        android:textSize="33sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/centerup"
+        android:layout_centerHorizontal="true"
+        android:text="内脏等级"
+        android:textSize="33sp" />\
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/centerdown"
+        android:layout_centerHorizontal="true"
+        android:text="BMR"
+        android:textSize="33sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/center"
+        android:layout_marginBottom="-20dp"
+        android:layout_marginLeft="30dp"
+        android:text="00%"
+        android:textSize="33sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/center"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="-15dp"
+        android:layout_marginRight="25dp"
+        android:text="00%"
+        android:textSize="33sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/center"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="-175dp"
+        android:layout_marginRight="40dp"
+        android:text="00"
+        android:textSize="33sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-255dp"
+        android:text="00%"
+        android:textSize="33sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:text="OKcal"
+        android:textSize="28sp" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignBottom="@id/center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="80dp"
+        android:src="@drawable/img_w2x" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:text="0.0"
+        android:textSize="33sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="kg"
+        android:textSize="33sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/center"
+        android:layout_marginBottom="-165dp"
+        android:layout_marginLeft="25dp"
+        android:text="0.0kg"
+        android:textSize="28sp" />
+</RelativeLayout>

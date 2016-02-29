@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_elv_weight_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:text="1111111"
+        android:layout_marginLeft="20dp"
+        android:textColor="#000000"
+        android:textSize="28sp" />
+
+    <TextView
+        android:id="@+id/tv_elv_weight_child"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_elv_weight_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:textColor="#000000"
+        android:text="45.00kg"
+        android:textSize="28sp" />
+</RelativeLayout>
