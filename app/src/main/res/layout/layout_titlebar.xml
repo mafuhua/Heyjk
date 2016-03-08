@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="60dp"
-        android:background="#450000FF">
+        android:background="#650000FF">
 
         <ImageView
             android:id="@+id/btn_return"

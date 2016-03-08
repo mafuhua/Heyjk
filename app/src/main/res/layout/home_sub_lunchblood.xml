@@ -3,13 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <include
+        android:id="@+id/layout_titlebar"
+        layout="@layout/layout_titlebar" />
     <ImageView
         android:id="@+id/center"
-        android:layout_width="260dp"
-        android:layout_height="260dp"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="95dp"
         android:src="@drawable/img_02_tizhong2x" />
 
     <ImageView
@@ -48,13 +50,13 @@
         android:layout_below="@+id/iamge"
         android:layout_toLeftOf="@+id/imageView"
         android:layout_toStartOf="@+id/imageView"
-        android:id="@+id/textView2" />
+        android:id="@+id/tv_xinlv" />
     <TextView
         android:text="mmol/L"
         android:textSize="33sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/tv_xinlv"
         android:layout_centerHorizontal="true"
         android:id="@+id/textView3" />
     <TextView
@@ -76,15 +78,15 @@
         android:layout_below="@+id/textView4"
         android:layout_alignRight="@+id/textView4"
         android:layout_alignEnd="@+id/textView4"
-        android:id="@+id/textView5" />
+        android:id="@+id/tv_diya" />
     <TextView
         android:text="umol/L"
         android:textSize="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView5"
-        android:layout_alignRight="@+id/textView5"
-        android:layout_alignEnd="@+id/textView5" />
+        android:layout_below="@+id/tv_diya"
+        android:layout_alignRight="@+id/tv_diya"
+        android:layout_alignEnd="@+id/tv_diya" />
     <TextView
         android:text="血脂"
         android:textSize="33sp"
@@ -103,13 +105,13 @@
         android:layout_below="@+id/textView6"
         android:layout_alignRight="@+id/textView6"
         android:layout_alignEnd="@+id/textView6"
-        android:id="@+id/textView7" />
+        android:id="@+id/tv_gaoya" />
     <TextView
         android:text="umol/L"
         android:textSize="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView7"
+        android:layout_below="@+id/tv_gaoya"
         android:layout_alignLeft="@+id/textView6"
         android:layout_alignStart="@+id/textView6" />
 </RelativeLayout>

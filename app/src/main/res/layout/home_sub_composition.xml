@@ -3,36 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <include
+        android:id="@+id/layout_titlebar"
+        layout="@layout/layout_titlebar" />
     <ImageView
         android:id="@+id/center"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:layout_centerInParent="true"
         android:src="@drawable/img_01_tichengfen2x" />
 
     <ImageView
         android:id="@+id/centerdown"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_below="@id/center"
         android:layout_centerInParent="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:src="@drawable/img_01_tichengfen2x" />
 
     <ImageView
         android:id="@+id/centerup"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_above="@id/center"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="30dp"
         android:src="@drawable/img_01_tichengfen2x" />
 
     <ImageView
         android:id="@+id/leftup"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_above="@id/center"
         android:layout_marginBottom="-45dp"
         android:layout_marginLeft="15dp"
@@ -40,8 +42,8 @@
 
     <ImageView
         android:id="@+id/rightup"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_above="@id/center"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="-40dp"
@@ -50,8 +52,8 @@
 
     <ImageView
         android:id="@+id/leftdown"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_above="@id/center"
         android:layout_marginBottom="-195dp"
         android:layout_marginLeft="15dp"
@@ -59,8 +61,8 @@
 
     <ImageView
         android:id="@+id/rightdown"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_above="@id/center"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="-200dp"
@@ -154,7 +156,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/center"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="-255dp"
+        android:layout_marginTop="-235dp"
         android:text="00%"
         android:textSize="33sp" />
 

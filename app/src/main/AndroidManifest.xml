@@ -2,7 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yuenkeji.heyjk" >
 
-<uses-permission android:name="android.permission.RESTART_PACKAGES"/>
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,12 +26,22 @@
         </activity>
         <activity
             android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".activity.CurveActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" >
         </activity>
-        <activity android:name=".activity.CurveActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog">
 
-        </activity>
+        <service
+            android:name=".viewpager.homesubPagers.BluetoothLeService"
+            android:enabled="true" />
+        <service
+            android:name=".viewpager.homesubPagers.blood.BloodService"
+            android:enabled="true" />
+        <service
+            android:name=".viewpager.homesubPagers.weight.WeightService"
+            android:enabled="true">
+        </service>
     </application>
 
 </manifest>
