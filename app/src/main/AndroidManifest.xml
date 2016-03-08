@@ -42,6 +42,7 @@
             android:name=".viewpager.homesubPagers.weight.WeightService"
             android:enabled="true">
         </service>
+        <service android:name=".viewpager.homesubPagers.weight.BlueService"/>
     </application>
 
 </manifest>

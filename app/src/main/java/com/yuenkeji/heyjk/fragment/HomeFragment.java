@@ -10,11 +10,11 @@ import com.yuenkeji.heyjk.viewpager.BasePager;
 import com.yuenkeji.heyjk.viewpager.MyViewPager;
 import com.yuenkeji.heyjk.viewpager.homesubPagers.AfterBloodPager;
 import com.yuenkeji.heyjk.viewpager.homesubPagers.BeforeBloodPager;
-import com.yuenkeji.heyjk.viewpager.homesubPagers.blood.BloodPressurePager;
-import com.yuenkeji.heyjk.viewpager.homesubPagers.CompositionPager;
+import com.yuenkeji.heyjk.viewpager.homesubPagers.weight.CompositionPager;
 import com.yuenkeji.heyjk.viewpager.homesubPagers.HomePage;
 import com.yuenkeji.heyjk.viewpager.homesubPagers.TemperaPager;
-import com.yuenkeji.heyjk.viewpager.homesubPagers.weight.WeightPager;
+import com.yuenkeji.heyjk.viewpager.homesubPagers.blood.BloodPressurePager;
+import com.yuenkeji.heyjk.viewpager.homesubPagers.weight.WeightPager2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,7 +111,7 @@ public class HomeFragment extends BaseFragment  {
             }
         });
         pagers.add(homePage);
-        pagers.add(new WeightPager(getActivity()));
+        pagers.add(new WeightPager2(getActivity()));
         pagers.add(new CompositionPager(getActivity()));
         pagers.add(new BeforeBloodPager(getActivity()));
         pagers.add(new AfterBloodPager(getActivity()));

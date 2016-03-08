@@ -241,6 +241,7 @@ public class TemperaPager extends BasePager implements View.OnClickListener {
                 HashMap<String, String> currentCharaData = new HashMap<String, String>();
                 uuid = gattCharacteristic.getUuid().toString();
                 Log.d(TAG, "特征 " + uuid);
+
                 if (uuid.equals("00002a1c-0000-1000-8000-00805f9b34fb")) {
                     final int charaProp = gattCharacteristic.getProperties();
                     if ((charaProp | BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
