@@ -23,6 +23,8 @@ public class CurveActivity extends Activity {
 
         String[] titles = new String[]{"脂肪率", "水分率","菇凉","体温"};
 
+
+
         List x = new ArrayList();
         List y = new ArrayList();
         x.add(new double[]{5, 9, 4, 6, 3, 15});
