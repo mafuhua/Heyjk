@@ -161,8 +161,8 @@ public class CurveFragment extends BaseFragment implements View.OnClickListener 
         appTitle.setVisibility(View.GONE);
         titleHome.setText(titleStrings[position]);
         titleHome.setVisibility(View.VISIBLE);
-        btnConfig.setVisibility(View.VISIBLE);
-        btnReturn.setVisibility(View.VISIBLE);
+        btnConfig.setVisibility(View.GONE);
+        btnReturn.setVisibility(View.GONE);
     }
 
     public void resetTabBottom() {

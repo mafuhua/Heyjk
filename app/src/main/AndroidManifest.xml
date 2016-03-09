@@ -36,13 +36,14 @@
             android:name=".viewpager.homesubPagers.BluetoothLeService"
             android:enabled="true" />
         <service
-            android:name=".viewpager.homesubPagers.blood.BloodService"
+            android:name=".homefragment.BloodService"
             android:enabled="true" />
         <service
-            android:name=".viewpager.homesubPagers.weight.WeightService"
+            android:name=".homefragment.WeightService"
             android:enabled="true">
         </service>
-        <service android:name=".viewpager.homesubPagers.weight.BlueService"/>
+        <service android:name=".homefragment.BloodPressureService"/>
+        <service android:name=".homefragment.TempService"/>
     </application>
 
 </manifest>

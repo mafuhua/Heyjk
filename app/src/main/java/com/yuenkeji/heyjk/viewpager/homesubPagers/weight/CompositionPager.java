@@ -1,40 +1,35 @@
 package com.yuenkeji.heyjk.viewpager.homesubPagers.weight;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattService;
-import android.bluetooth.BluetoothManager;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.ServiceConnection;
-import android.os.Handler;
-import android.os.IBinder;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.yuenkeji.heyjk.R;
-import com.yuenkeji.heyjk.fragment.HomeFragment;
 import com.yuenkeji.heyjk.viewpager.BasePager;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * 体成分测量
  * Created by Administrator on 2016/2/19.
  */
 public class CompositionPager extends BasePager implements View.OnClickListener {
+    public CompositionPager(Context context) {
+        super(context);
+    }
 
-    private final static String TAG = "mafuhua";
+    @Override
+    public View initView() {
+        return null;
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+   /* private final static String TAG = "mafuhua";
     // Stops scanning after 10 seconds.
     private static final long SCAN_PERIOD = 10000;
     private final String LIST_NAME = "NAME";
@@ -59,14 +54,14 @@ public class CompositionPager extends BasePager implements View.OnClickListener 
     private boolean mScanning;
     private Handler mHandler;
     private TextView textview_return_result; // 返回结果按钮
-    private BlueService mBluetoothLeService;
+    private BloodPressureService mBluetoothLeService;
     // Code to manage Service lifecycle.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName componentName,
                                        IBinder service) {
-            mBluetoothLeService = ((BlueService.LocalBinder) service)
+            mBluetoothLeService = ((BloodPressureService.LocalBinder) service)
                     .getService();
             if (!mBluetoothLeService.initialize()) {
                 Log.e(TAG, "Unable to initialize Bluetooth");
@@ -89,25 +84,25 @@ public class CompositionPager extends BasePager implements View.OnClickListener 
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
-            if (BlueService.ACTION_GATT_CONNECTED.equals(action)) {
+            if (BloodPressureService.ACTION_GATT_CONNECTED.equals(action)) {
                 mConnected = true;
-             /*   updateConnectionState(R.string.connected);
-                invalidateOptionsMenu();*/
-            } else if (BlueService.ACTION_GATT_DISCONNECTED
+             *//*   updateConnectionState(R.string.connected);
+                invalidateOptionsMenu();*//*
+            } else if (BloodPressureService.ACTION_GATT_DISCONNECTED
                     .equals(action)) {
                 mConnected = false;
                 //   updateConnectionState(R.string.disconnected);
 
 
-            } else if (BlueService.ACTION_GATT_SERVICES_DISCOVERED
+            } else if (BloodPressureService.ACTION_GATT_SERVICES_DISCOVERED
                     .equals(action)) {
                 // Show all the supported services and characteristics on the
                 // user interface.
                 displayGattServices(mBluetoothLeService
                         .getSupportedGattServices());
-            } else if (BlueService.ACTION_DATA_AVAILABLE.equals(action)) {
+            } else if (BloodPressureService.ACTION_DATA_AVAILABLE.equals(action)) {
                 displayData(intent
-                        .getStringExtra(BlueService.EXTRA_DATA));
+                        .getStringExtra(BloodPressureService.EXTRA_DATA));
             }
         }
     };
@@ -120,7 +115,7 @@ public class CompositionPager extends BasePager implements View.OnClickListener 
                     Log.d("mafuhua", "设备地址" + device.getAddress() + "设备名称" + device.getName());
                     //"DoouYa Thermometer"
                     if (device.getName().equals("eBody-Fat-Scale")) {
-                        Intent gattServiceIntent = new Intent(context, BlueService.class);
+                        Intent gattServiceIntent = new Intent(context, BloodPressureService.class);
                         context.bindService(gattServiceIntent, mServiceConnection, context.BIND_AUTO_CREATE);
                         context.registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
                         Log.e(TAG, "3");
@@ -152,11 +147,11 @@ public class CompositionPager extends BasePager implements View.OnClickListener 
 
     private static IntentFilter makeGattUpdateIntentFilter() {
         final IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BlueService.ACTION_GATT_CONNECTED);
-        intentFilter.addAction(BlueService.ACTION_GATT_DISCONNECTED);
+        intentFilter.addAction(BloodPressureService.ACTION_GATT_CONNECTED);
+        intentFilter.addAction(BloodPressureService.ACTION_GATT_DISCONNECTED);
         intentFilter
-                .addAction(BlueService.ACTION_GATT_SERVICES_DISCOVERED);
-        intentFilter.addAction(BlueService.ACTION_DATA_AVAILABLE);
+                .addAction(BloodPressureService.ACTION_GATT_SERVICES_DISCOVERED);
+        intentFilter.addAction(BloodPressureService.ACTION_DATA_AVAILABLE);
         return intentFilter;
     }
 
@@ -201,17 +196,17 @@ public class CompositionPager extends BasePager implements View.OnClickListener 
         switch (v.getId()) {
             case R.id.btn_confirm:
                 HomeFragment.myViewPagers.setCurrentItem(0);
-              /*  context.unbindService(mServiceConnection);
+              *//*  context.unbindService(mServiceConnection);
                 context.unregisterReceiver(mGattUpdateReceiver);
-                mBluetoothLeService = null;*/
+                mBluetoothLeService = null;*//*
                 HomeFragment.flag = false;
                 Toast.makeText(context, "提交", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_return:
                 HomeFragment.myViewPagers.setCurrentItem(0);
-               /* context.unbindService(mServiceConnection);
+               *//* context.unbindService(mServiceConnection);
                 context.unregisterReceiver(mGattUpdateReceiver);
-                mBluetoothLeService = null;*/
+                mBluetoothLeService = null;*//*
                 HomeFragment.flag = false;
                 Toast.makeText(context, "返回", Toast.LENGTH_SHORT).show();
 
@@ -244,24 +239,24 @@ public class CompositionPager extends BasePager implements View.OnClickListener 
     public void MyonClick(View view) {
         switch (view.getId()) {
             //唤醒
-           /* case R.id.button1:
+           *//* case R.id.button1:
                 byte[] bb = {(byte) 0xfd, 0x53, 0x42, (byte) 0xbe, 0x40, (byte) 0x98, (byte) 0xb4};
                 mBluetoothLeService.writeLlsAlertLevel(2, bb);
                 Toast.makeText(DeviceControlActivity.this, "数据已经发送出去",
                         Toast.LENGTH_SHORT).show();
-                break;*/
+                break;*//*
 
         }
     }
 
     private void updateConnectionState(final int resourceId) {
-   /*     runOnUiThread(new Runnable() {
+   *//*     runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 System.out.println("ResourceId##########" + resourceId);
                 mConnectionState.setText(resourceId);
             }
-        });*/
+        });*//*
     }
 
     private void displayData(String data) {
@@ -319,10 +314,10 @@ public class CompositionPager extends BasePager implements View.OnClickListener 
         if (gattServices == null)
             return;
         String uuid = null;
-       /* String unknownServiceString = getResources().getString(
+       *//* String unknownServiceString = getResources().getString(
                 R.string.unknown_service);
         String unknownCharaString = getResources().getString(
-                R.string.unknown_characteristic);*/
+                R.string.unknown_characteristic);*//*
         ArrayList<HashMap<String, String>> gattServiceData = new ArrayList<HashMap<String, String>>();
         ArrayList<ArrayList<HashMap<String, String>>> gattCharacteristicData = new ArrayList<ArrayList<HashMap<String, String>>>();
         mGattCharacteristics = new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
@@ -381,6 +376,6 @@ public class CompositionPager extends BasePager implements View.OnClickListener 
             gattCharacteristicData.add(gattCharacteristicGroupData);
         }
 
-    }
+    }*/
 
 }

@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:text="体重测量"
                 android:textColor="#ffffff"
-                android:textSize="36sp" />
+                android:textSize="30sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:text="体成分测试"
                 android:textColor="#ffffff"
-                android:textSize="36sp" />
+                android:textSize="30sp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -73,12 +73,13 @@
             android:id="@+id/tv_beforelunch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:lines="1"
             android:text="餐前血糖"
+            android:layout_marginLeft="10dp"
             android:textColor="#ffffff"
-            android:textSize="36sp" />
+            android:textSize="30sp" />
 
         <ImageView
             android:id="@+id/img_06_homepage2x"
@@ -94,9 +95,10 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:lines="1"
+            android:layout_marginLeft="15dp"
             android:text="餐后血糖"
             android:textColor="#ffffff"
-            android:textSize="36sp" />
+            android:textSize="30sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -123,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:text="血压测量"
                 android:textColor="#ffffff"
-                android:textSize="36sp" />
+                android:textSize="30sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -144,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:text="体温测量"
                 android:textColor="#ffffff"
-                android:textSize="36sp" />
+                android:textSize="30sp" />
         </LinearLayout>
     </LinearLayout>
     </LinearLayout>

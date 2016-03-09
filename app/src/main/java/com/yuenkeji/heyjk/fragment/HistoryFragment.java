@@ -280,8 +280,8 @@ public class HistoryFragment extends BaseFragment implements View.OnClickListene
         appTitle.setVisibility(View.GONE);
         titleHome.setText(titleStrings[position]);
         titleHome.setVisibility(View.VISIBLE);
-        btnConfig.setVisibility(View.VISIBLE);
-        btnReturn.setVisibility(View.VISIBLE);}
+        btnConfig.setVisibility(View.GONE);
+        btnReturn.setVisibility(View.GONE);}
     public void resetTabBottom() {
         iconHistoryTitle1.setImageDrawable(getResources().getDrawable(R.drawable.icon_w_n2x));
         iconHistoryTitle2.setImageDrawable(getResources().getDrawable(R.drawable.icon_body_n2x));

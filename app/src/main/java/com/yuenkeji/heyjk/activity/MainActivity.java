@@ -16,6 +16,12 @@ import com.yuenkeji.heyjk.fragment.FragmentFractory;
 import com.yuenkeji.heyjk.fragment.HistoryFragment;
 import com.yuenkeji.heyjk.fragment.HomeFragment;
 import com.yuenkeji.heyjk.fragment.SettingFragment;
+import com.yuenkeji.heyjk.homefragment.BloodFragment;
+import com.yuenkeji.heyjk.homefragment.BloodPressureFragment;
+import com.yuenkeji.heyjk.homefragment.HomeFragment2;
+import com.yuenkeji.heyjk.homefragment.TempFragment;
+import com.yuenkeji.heyjk.homefragment.Weight2Fragment;
+import com.yuenkeji.heyjk.homefragment.WeightComFragment;
 
 /**
  * 打开程序主界面
@@ -39,6 +45,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private HistoryFragment historyFragment;
     private CurveFragment curveFragment;
     private SettingFragment settingFragment;
+    private HomeFragment2 homeFragment2;
+    private TempFragment tempFragment;
+    private BloodFragment bloodFragment;
+    private BloodPressureFragment bloodPressureFragment;
+    private Weight2Fragment weightFragment;
+    private WeightComFragment weightComFragment;
 
 
     private void assignViews() {
@@ -76,16 +88,76 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         scanLeDevice(true);*/
 
 
-
         assignViews();
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
-        homeFragment = (HomeFragment) FragmentFractory.getInstance().createFragment(0);
-        ft.replace(R.id.ll_content, homeFragment);
+        homeFragment2 = new HomeFragment2();
+        //  homeFragment = (HomeFragment) FragmentFractory.getInstance().createFragment(0);
+        ft.replace(R.id.ll_content, homeFragment2);
         ft.commit();
+        homeFragment2.setOnBTClickListener(new HomeFragment2.OnBTClickListener() {
+            @Override
+            public void onSubClick(int position) {
+                subhomepager(position);
+            }
+        });
         historyFragment = (HistoryFragment) FragmentFractory.getInstance().createFragment(8);
         curveFragment = (CurveFragment) FragmentFractory.getInstance().createFragment(7);
         settingFragment = (SettingFragment) FragmentFractory.getInstance().createFragment(9);
+    }
+
+    public void subhomepager(int position) {
+        ft = fm.beginTransaction();
+        switch (position) {
+            case 0:
+
+
+                ft.replace(R.id.ll_content, homeFragment2);
+
+
+                break;
+            case 1:
+                flag = true;
+                weightFragment = new Weight2Fragment();
+                ft.replace(R.id.ll_content, weightFragment);
+
+
+                break;
+            case 2:
+                flag = true;
+                weightComFragment = new WeightComFragment();
+                ft.replace(R.id.ll_content, weightComFragment);
+
+                break;
+            case 3:
+                flag = true;
+                bloodFragment = new BloodFragment();
+                ft.replace(R.id.ll_content, bloodFragment);
+
+                break;
+            case 4:
+                flag = true;
+                bloodFragment = new BloodFragment();
+                ft.replace(R.id.ll_content, bloodFragment);
+
+                break;
+            case 5:
+                flag = true;
+                bloodPressureFragment = new BloodPressureFragment();
+                ft.replace(R.id.ll_content, bloodPressureFragment);
+
+                break;
+            case 6:
+                flag = true;
+                tempFragment = new TempFragment();
+                ft.replace(R.id.ll_content, tempFragment);
+
+                break;
+
+
+        }
+        ft.commit();
+
     }
 
     @Override
@@ -97,9 +169,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 ivMeasure.setImageDrawable(getResources().getDrawable(
                         R.drawable.tab_01_s2x));
                 tvMeasure.setTextColor(getResources().getColor(R.color.blue));
-                ft.replace(R.id.ll_content, this.homeFragment);
+                ft.replace(R.id.ll_content, this.homeFragment2);
                 break;
             case R.id.ll_history:
+                flag = true;
                 resetTabBottom();
                 ivHistory.setImageDrawable(getResources().getDrawable(
                         R.drawable.tab_02_s2x));
@@ -107,6 +180,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 ft.replace(R.id.ll_content, historyFragment);
                 break;
             case R.id.ll_curve:
+                flag = true;
                 resetTabBottom();
                 ivCurve.setImageDrawable(getResources().getDrawable(
                         R.drawable.tab_03_s2x));
@@ -114,6 +188,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 ft.replace(R.id.ll_content, curveFragment);
                 break;
             case R.id.ll_setting:
+                flag = true;
                 resetTabBottom();
                 ivSetting.setImageDrawable(getResources().getDrawable(
                         R.drawable.tab_04_s2x));
@@ -141,20 +216,17 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 R.drawable.tab_04_n2x));
         tvSetting.setTextColor(getResources().getColor(R.color.black));
     }
-
+    public boolean flag = false;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (KeyEvent.KEYCODE_BACK == event.getKeyCode()&&homeFragment.flag == true) {
-            homeFragment.myViewPagers.setCurrentItem(0);
-            homeFragment.initHomeTitleBar();
+
+        if (KeyEvent.KEYCODE_BACK == event.getKeyCode() && flag == true) {
+           subhomepager(0);
+            flag = false;
             return true;
-        } else if(homeFragment.myViewPagers.getCurrentItem() == 0){
+        } else {
             return super.onKeyDown(keyCode, event);
 
-        }else if (homeFragment.myViewPagers.getCurrentItem()>0){
-            return true;
-        }else {
-            return super.onKeyDown(keyCode, event);
         }
     }
 
@@ -225,7 +297,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
 				*/
 /*displayData(intent
-						.getStringExtra(BluetoothLeService.EXTRA_DATA));*//*
+                        .getStringExtra(BluetoothLeService.EXTRA_DATA));*//*
 
             }
         }
@@ -374,13 +446,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
 */
-
-
-
-
-
-
-
 
 
 }

@@ -3,7 +3,7 @@
     android:id="@+id/layout_history_sectitle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#450000FF"
+    android:background="#650000FF"
     android:orientation="vertical">
 
     <View
