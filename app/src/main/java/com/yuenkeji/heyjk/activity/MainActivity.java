@@ -1,5 +1,6 @@
 package com.yuenkeji.heyjk.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -49,9 +50,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private BloodPressureFragment bloodPressureFragment;
     private Weight2Fragment weightFragment;
     private WeightComFragment weightComFragment;
-    public static String userid = "15";
+    private SharedPreferences sharedPreferences;
+    public static String userid;
     private void assignViews() {
-
+        sharedPreferences = getSharedPreferences("userinfo", MODE_PRIVATE);
+        userid = sharedPreferences.getString("user_id", "");
         llMeasure = (LinearLayout) findViewById(R.id.ll_measure);
         ivMeasure = (ImageView) findViewById(R.id.iv_measure);
         tvMeasure = (TextView) findViewById(R.id.tv_measure);

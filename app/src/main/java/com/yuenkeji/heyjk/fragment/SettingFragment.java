@@ -2,8 +2,10 @@ package com.yuenkeji.heyjk.fragment;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,9 +16,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.yuenkeji.heyjk.R;
-import com.yuenkeji.heyjk.activity.LoginActivity;
+import com.yuenkeji.heyjk.activity.MainActivity;
+import com.yuenkeji.heyjk.bean.LookUserBean;
+import com.yuenkeji.heyjk.utils.WEBUtils;
+import com.yuenkeji.heyjk.utils.XUtils;
+
+import org.xutils.common.Callback;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -28,17 +37,74 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 
     private ListView lvSetting;
     private Button btSettingQuit;
-    private String[] settingText = new String[]{"性别", "生日", "身高", "体重", "运动类型"};
-    private HashMap<Integer, String> settingMap = new HashMap<>();
+    private String[] settingText = new String[]{"性别", "年龄", "身高", "体重", "运动类型"};
+    private HashMap<Integer,String> settingMap = new HashMap();
     private MyListAdapter myListAdapter;
     private int showYear;
     private int mYear;
     private int mMonth;
     private int mDay;
     private Calendar calendar;
+    private SharedPreferences sharedPreferences;
+    private ImageView btn_confirm;
+    private String birth;
+    private String weight;
+
     private void assignViews(View view) {
+        sharedPreferences = getActivity().getSharedPreferences("userinfo", Context.MODE_PRIVATE);
         lvSetting = (ListView) view.findViewById(R.id.lv_setting);
         btSettingQuit = (Button) view.findViewById(R.id.bt_setting_quit);
+        btn_confirm = (ImageView) view.findViewById(R.id.btn_confirm);
+        btn_confirm.setVisibility(View.VISIBLE);
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String sextype = settingMap.get(0);
+                if (sextype.equals("男")) {
+                    sextype = "0";
+                } else if (sextype.equals("女")) {
+                    sextype = "1";
+                }
+                String sporttype = settingMap.get(4);
+                if (sporttype.equals("脑力劳动者")) {
+                    sporttype = "0";
+                } else if (sporttype.equals("体力劳动者")) {
+                    sporttype = "1";
+                } else if (sporttype.equals("运动员")) {
+                    sporttype = "2";
+                }
+                HashMap<String, String> map = new HashMap<>();
+                map.put("user_id", MainActivity.userid);
+                map.put("sex", sextype);
+                map.put("birthday", settingMap.get(1));
+                map.put("height", settingMap.get(2));
+                map.put("weight", settingMap.get(3));
+                map.put("sport", sporttype);
+                XUtils.xUtilsPost(WEBUtils.UpdateUserUrl, map, new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.d("mafuhua", "UpdateUserUrl=====" + result);
+                        Toast.makeText(getActivity(), "提交成功", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+            }
+        });
+
     }
 
     public void settingSex(final int position) {
@@ -54,7 +120,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                settingMap.put(position, items[which]);
+                settingMap.put(0, items[which]);
                 myListAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
@@ -75,7 +141,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                settingMap.put(position, items[which]);
+                settingMap.put(4, items[which]);
                 myListAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
@@ -92,7 +158,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String weight = editText.getText().toString().trim();
+                weight = editText.getText().toString().trim();
                 settingMap.put(position, weight + hint);
                 myListAdapter.notifyDataSetChanged();
             }
@@ -114,7 +180,8 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         //mYear = year;
-                        settingMap.put(position, year + "年" + monthOfYear + "月" + dayOfMonth +"日");
+                        settingMap.put(1, year + "年" + monthOfYear + "月" + dayOfMonth + "日");
+                        birth = year + monthOfYear + dayOfMonth + "";
                         myListAdapter.notifyDataSetChanged();
                     }
                 }, calendar.get(calendar.YEAR), calendar.get(calendar.MONTH), calendar.get(calendar.DAY_OF_MONTH));
@@ -126,6 +193,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     public View initView() {
         View view = View.inflate(getActivity(), R.layout.home_setting, null);
         assignViews(view);
+        sharedPreferences = getActivity().getSharedPreferences("userinfo", Context.MODE_PRIVATE);
         calendar = Calendar.getInstance();
         btSettingQuit.setOnClickListener(this);
         myListAdapter = new MyListAdapter();
@@ -139,7 +207,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 
                         break;
                     case 1:
-                        settingBirthday(position);
+                        settingWeight(position, "年龄", "");
                         break;
                     case 2:
                         settingWeight(position, "身高", "CM");
@@ -160,15 +228,65 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void initData() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("user_id", MainActivity.userid);
+        XUtils.xUtilsPost(WEBUtils.LookUserUrl, map, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("mafuhua", "LookUserUrl======="+result);
+
+                parseJson(result);
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    private void parseJson(String result) {
+        Gson gson = new Gson();
+        LookUserBean lookUserBean = gson.fromJson(result, LookUserBean.class);
+        if (lookUserBean.data.get(0).sex.equals("0")) {
+            settingMap.put(0, "男");
+        } else if (lookUserBean.data.get(0).sex.equals("1")) {
+            settingMap.put(0, "女");
+        }
+
+        settingMap.put(1, lookUserBean.data.get(0).birthday);
+        settingMap.put(2, lookUserBean.data.get(0).height);
+        settingMap.put(3, lookUserBean.data.get(0).weight);
+        settingMap.put(4, lookUserBean.data.get(0).sport);
+        if (lookUserBean.data.get(0).sport.equals("0")) {
+            settingMap.put(4, "脑力劳动者");
+        } else if (lookUserBean.data.get(0).sport.equals("1")) {
+            settingMap.put(4, "体力劳动者");
+        } else if (lookUserBean.data.get(0).sport.equals("2")) {
+            settingMap.put(4, "运动员");
+        }
+        Log.d("mafuhua", "settingMap:" + settingMap);
+        myListAdapter.notifyDataSetChanged();
+
 
     }
 
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.bt_setting_quit:
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+                sharedPreferences.edit().putString("usernum", "").apply();
                 getActivity().finish();
                 break;
         }
@@ -201,8 +319,14 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            viewHolder.tvsettingleft.setText(settingText[position]);
-            viewHolder.tvsettingright.setText(settingMap.get(position));
+            if (settingMap.size()<1){
+                viewHolder.tvsettingleft.setText(settingText[position]);
+            }else {
+                viewHolder.tvsettingleft.setText(settingText[position]);
+                viewHolder.tvsettingright.setText(settingMap.get(position));
+            }
+
+
             return convertView;
         }
 

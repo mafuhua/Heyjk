@@ -92,7 +92,7 @@ public class HistoryFragment extends BaseFragment implements View.OnClickListene
         sortUtil.setHISTORY_BOT(1);
         dateList = new ArrayList<>();
         timeList = new ArrayList<>();
-        SetForTest(1, 1);
+       // SetForTest(1, 1);
         initTitleBar(0);
         myAdapter = new MyAdapter();
 
@@ -129,6 +129,7 @@ public class HistoryFragment extends BaseFragment implements View.OnClickListene
     }
 
     public void setBottom() {
+        Log.d("mafuhua", "setBottom" + ""+sortUtil.getHISTORY_TOP());
         if (sortUtil.getHISTORY_TOP() == 1) {
             SetForTest(sortUtil.getHISTORY_TOP(), sortUtil.getHISTORY_BOT());
         } else if (sortUtil.getHISTORY_TOP() == 2) {

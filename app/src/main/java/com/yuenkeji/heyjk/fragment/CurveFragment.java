@@ -92,7 +92,7 @@ public class CurveFragment extends BaseFragment implements View.OnClickListener 
         sortUtil.setHISTORY_BOT(1);
         dateList = new ArrayList<>();
         timeList = new ArrayList<>();
-        SetForTest(1, 1);
+        //SetForTest(1, 1);
         initTitleBar(0);
         myAdapter = new MyAdapter();
 
