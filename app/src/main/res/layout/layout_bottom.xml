@@ -25,7 +25,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
-                android:background="@drawable/tab_01_n2x" />
+                android:background="@drawable/tab12x" />
 
             <TextView
                 android:id="@+id/tv_measure"
@@ -94,7 +94,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
-                android:background="@drawable/tab_04_n2x" />
+                android:background="@drawable/tab4n2x" />
 
             <TextView
                 android:id="@+id/tv_setting"

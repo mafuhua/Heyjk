@@ -27,20 +27,8 @@ public class FragmentFractory {
         fragment = cacheFragment.get(position);
         if (fragment == null) {
             if (position == 0) {
-                fragment = new HomeFragment();
-            } /*else if (position == 1) {
-                fragment = new WeightFragment();
-            } else if (position == 2) {
-                fragment = new TemeraFragment();
-            } else if (position == 3) {
-                fragment = new BloodFragment();
-            } else if (position == 4) {
-                fragment = new BloodPressureFragment();
-            } else if (position == 5) {
-                fragment = new HomeBeforeBloodFragment();
-            } else if (position == 6) {
-                fragment = new CompositionFragment();
-            }*/ else if (position == 7) {
+
+            } else if (position == 7) {
                 fragment = new CurveFragment();
             } else if (position == 8) {
                 fragment = new HistoryFragment();

@@ -5,21 +5,20 @@
 
     <TextView
         android:id="@+id/tv_elv_weight_parent"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#668B8B8B"
+        android:gravity="center"
         android:text="1111111"
-        android:layout_marginLeft="20dp"
-        android:textColor="#000000"
-        android:textSize="28sp" />
+        android:textSize="22sp"/>
 
     <TextView
         android:id="@+id/tv_elv_weight_child"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tv_elv_weight_parent"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:textColor="#000000"
+        android:layout_centerHorizontal="true"
+        android:padding="5dp"
+        android:layout_below="@+id/tv_elv_weight_parent"
         android:text="45.00kg"
-        android:textSize="28sp" />
+        android:textSize="18sp" />
 </RelativeLayout>

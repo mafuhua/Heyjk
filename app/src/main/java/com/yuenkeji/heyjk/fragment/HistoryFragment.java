@@ -1,25 +1,34 @@
 package com.yuenkeji.heyjk.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.yuenkeji.heyjk.R;
+import com.yuenkeji.heyjk.activity.HistoryChildActivity;
+import com.yuenkeji.heyjk.activity.MainActivity;
+import com.yuenkeji.heyjk.bean.AllDayWeightBean;
+import com.yuenkeji.heyjk.bean.AllMonthWeightBean;
+import com.yuenkeji.heyjk.bean.AllWeekWeightBean;
 import com.yuenkeji.heyjk.utils.SortUtil;
+import com.yuenkeji.heyjk.utils.WEBUtils;
+import com.yuenkeji.heyjk.utils.XUtils;
+
+import org.xutils.common.Callback;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -30,6 +39,7 @@ public class HistoryFragment extends BaseFragment implements View.OnClickListene
     public ImageView btnReturn;
     public ImageView btnConfig;
     public TextView titleHome;
+    public String[] titleStrings = new String[]{"体重历史数据", "体成分历史数据", "血糖历史数据", "血压历史数据", "体温历史数据"};
     private LinearLayout layoutHistoryThirdtitle;
     private ImageView iconHistoryTitle1;
     private ImageView iconHistoryTitle2;
@@ -40,33 +50,27 @@ public class HistoryFragment extends BaseFragment implements View.OnClickListene
     private Button btnDay;
     private Button btnWeek;
     private Button btnMonth;
-    private int mHour;
-    private int mMinute;
-    private int mYear;
-    private int mMonth;
-    private int mDay;
     private List<String> dateList;
     private List<String> timeList;
-    private FragmentManager fm;
-    private FragmentTransaction ft;
-    // private WeightFragment weightFragment;
-    private SortUtil sortUtil;
-    private int history_bot;
-    private int history_top;
-    private ExpandableListView expandableListView;
-    private ExpandableListAdapter adapter;
+    public static SortUtil sortUtil;
+    private ListView historyListView;
+    private MyAdapter myAdapter;
+    private List<AllDayWeightBean.DataEntity> allDayWeightBeandata;
+    private HashMap<String, String> map;
+    private List<AllMonthWeightBean.DataEntity> allMonthWeightBeandata;
+    private List<AllWeekWeightBean.DataEntity> allWeekWeightBeandata;
+    private int type = 0;
 
     private void assignViews(View view) {
         layoutHistorySectitle = (LinearLayout) view.findViewById(R.id.layout_history_sectitle);
         sortUtil = new SortUtil();
-        history_bot = sortUtil.getHISTORY_BOT();
-        history_top = sortUtil.getHISTORY_TOP();
         btnDay = (Button) view.findViewById(R.id.btn_day);
         btnWeek = (Button) view.findViewById(R.id.btn_week);
         btnMonth = (Button) view.findViewById(R.id.btn_month);
         btnReturn = (ImageView) view.findViewById(R.id.btn_return);
         btnConfig = (ImageView) view.findViewById(R.id.btn_confirm);
         titleHome = (TextView) view.findViewById(R.id.tv_title_home);
+        historyListView = (ListView) view.findViewById(R.id.historyListView);
         appTitle = (LinearLayout) view.findViewById(R.id.app_title);
         layoutHistoryThirdtitle = (LinearLayout) view.findViewById(R.id.layout_history_thirdtitle);
         iconHistoryTitle1 = (ImageView) view.findViewById(R.id.icon_history_title1);
@@ -86,161 +90,41 @@ public class HistoryFragment extends BaseFragment implements View.OnClickListene
 
         sortUtil.setHISTORY_TOP(1);
         sortUtil.setHISTORY_BOT(1);
-        /**BaseExpandableListAdapter实现了ExpandableListAdapter*/
-        final Calendar c = Calendar.getInstance();
-
-        mYear = c.get(Calendar.YEAR); //获取当前年份
-
-        mMonth = c.get(Calendar.MONTH);//获取当前月份
-        mMonth = mMonth + 1;
-        mDay = c.get(Calendar.DAY_OF_MONTH);//获取当前月份的日期号码
-
-        mHour = c.get(Calendar.HOUR_OF_DAY);//获取当前的小时数
-
-        mMinute = c.get(Calendar.MINUTE);//获取当前的分钟数
-
-
         dateList = new ArrayList<>();
         timeList = new ArrayList<>();
         SetForTest(1, 1);
         initTitleBar(0);
-        adapter = new BaseExpandableListAdapter() {
-/*===========组元素表示可折叠的列表项，子元素表示列表项展开后看到的多个子元素项=============*/
+        myAdapter = new MyAdapter();
 
-            /**----------得到armTypes和arms中每一个元素的ID-------------------------------------------*/
 
-            //获取组在给定的位置编号，即armTypes中元素的ID
-            @Override
-            public long getGroupId(int groupPosition) {
-                return groupPosition;
-            }
-
-            //获取在给定的组的儿童的ID，就是arms中元素的ID
-            @Override
-            public long getChildId(int groupPosition, int childPosition) {
-                return childPosition;
-            }
-
-            /**----------根据上面得到的ID的值，来得到armTypes和arms中元素的个数 ------------------------*/
-
-            //获取的群体数量，得到armTypes里元素的个数
-            @Override
-            public int getGroupCount() {
-                return dateList.size();
-            }
-
-            //取得指定组中的儿童人数，就是armTypes中每一个种族它军种的个数
-            @Override
-            public int getChildrenCount(int groupPosition) {
-                // return timeList.get(groupPosition).length();
-                return timeList.size();
-            }
-
-            /**----------利用上面getGroupId得到ID，从而根据ID得到armTypes中的数据，并填到TextView中 -----*/
-
-            //获取与给定的组相关的数据，得到数组armTypes中元素的数据
-            @Override
-            public Object getGroup(int groupPosition) {
-                return dateList.get(groupPosition);
-            }
-
-            //获取一个视图显示给定组，存放armTypes
-            @Override
-            public View getGroupView(int groupPosition, boolean isExpanded,
-                                     View convertView, ViewGroup parent) {
-                ViewHolder viewHolder;
-                if (convertView == null) {
-                    viewHolder = new ViewHolder();
-                    convertView = View.inflate(getActivity(), R.layout.elv_parent, null);
-                    viewHolder.textView = (TextView) convertView.findViewById(R.id.tv_elv_weight_parent);
-                    convertView.setTag(viewHolder);
-                } else {
-                    viewHolder = (ViewHolder) convertView.getTag();
-                }
-                viewHolder.textView.setText(getGroup(groupPosition).toString());
-                return convertView;
-            }
-
-            /**----------利用上面getChildId得到ID，从而根据ID得到arms中的数据，并填到TextView中---------*/
-
-            //获取与孩子在给定的组相关的数据,得到数组arms中元素的数据
-            @Override
-            public Object getChild(int groupPosition, int childPosition) {
-                return timeList.get(childPosition);
-            }
-
-            //获取一个视图显示在给定的组 的儿童的数据，就是存放arms
-            @Override
-            public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
-                                     View convertView, ViewGroup parent) {
-                ViewHolder viewHolder = null;
-                if (convertView == null) {
-                    viewHolder = new ViewHolder();
-                    convertView = View.inflate(getActivity(), R.layout.elv_child, null);
-                    viewHolder.textView = (TextView) convertView.findViewById(R.id.tv_elv_weight_parent);
-                    convertView.setTag(viewHolder);
-                } else {
-                    viewHolder = (ViewHolder) convertView.getTag();
-                }
-                viewHolder.textView.setText(getChild(groupPosition, childPosition).toString());
-                return convertView;
-            }
-
-            //孩子在指定的位置是可选的，即：arms中的元素是可点击的
-            @Override
-            public boolean isChildSelectable(int groupPosition, int childPosition) {
-                return true;
-            }
-
-            //表示孩子是否和组ID是跨基础数据的更改稳定
-            public boolean hasStableIds() {
-                return true;
-            }
-        };
-        expandableListView = (ExpandableListView) view.findViewById(R.id.expandableListView);
-        expandableListView.setGroupIndicator(null);
-        expandableListView.setAdapter(adapter);
-        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                Toast.makeText(getActivity(), "groupPosition:" + groupPosition, Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Toast.makeText(getActivity(), "group:" + groupPosition + "child:" + childPosition, Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
     }
 
     public void SetForTest(int aaa, int bbb) {
-        dateList.clear();
-        timeList.clear();
-        for (int i = 0; i < 5; i++) {
-
-            String date = mYear + "年" + mMonth + "月" + i + "****" + aaa + "****" + bbb;
-            Log.d("HistoryFragment*******", date);
-            dateList.add(date);
-        }
-        for (int i = 0; i < 3; i++) {
-
-            String time = mHour + ":" + i + "en         t" + aaa;
-            ;
-            Log.d("*******", time);
-            timeList.add(time);
-        }
-    }
-
-    public void setTop() {
-        if (sortUtil.getHISTORY_BOT() == 1) {
-            SetForTest(sortUtil.getHISTORY_TOP(), sortUtil.getHISTORY_BOT());
-        } else if (sortUtil.getHISTORY_BOT() == 2) {
-            SetForTest(sortUtil.getHISTORY_TOP(), sortUtil.getHISTORY_BOT());
-        } else if (sortUtil.getHISTORY_BOT() == 3) {
-            SetForTest(sortUtil.getHISTORY_TOP(), sortUtil.getHISTORY_BOT());
+        Log.d("mafuhua", aaa + "***" + bbb);
+        if (aaa == 1 && bbb == 1) {
+            getDayContent(map, WEBUtils.AllDayWeightUrl);
+        } else if (aaa == 2 && bbb == 1) {
+            getDayContent(map, WEBUtils.AllDayBodyUrl);
+        } else if (aaa == 4 && bbb == 1) {
+            getDayContent(map, WEBUtils.AllDayBloodpUrl);
+        } else if (aaa == 5 && bbb == 1) {
+            getDayContent(map, WEBUtils.AllDayTemperatureUrl);
+        } else if (aaa == 1 && bbb == 2) {
+            getDayContent(map, WEBUtils.AllWeekWeightUrl);
+        } else if (aaa == 2 && bbb == 2) {
+            getDayContent(map, WEBUtils.AllWeekBodyUrl);
+        } else if (aaa == 4 && bbb == 2) {
+            getDayContent(map, WEBUtils.AllWeekBloodpUrl);
+        } else if (aaa == 5 && bbb == 2) {
+            getDayContent(map, WEBUtils.AllWeekTemperatureUrl);
+        } else if (aaa == 1 && bbb == 3) {
+            getDayContent(map, WEBUtils.AllMonthWeightUrl);
+        } else if (aaa == 2 && bbb == 3) {
+            getDayContent(map, WEBUtils.AllMonthBodyUrl);
+        } else if (aaa == 4 && bbb == 3) {
+            getDayContent(map, WEBUtils.AllMonthBloodpUrl);
+        } else if (aaa == 5 && bbb == 3) {
+            getDayContent(map, WEBUtils.AllMonthTemperatureUrl);
         }
     }
 
@@ -253,7 +137,7 @@ public class HistoryFragment extends BaseFragment implements View.OnClickListene
             SetForTest(sortUtil.getHISTORY_TOP(), sortUtil.getHISTORY_BOT());
         } else if (sortUtil.getHISTORY_TOP() == 4) {
             SetForTest(sortUtil.getHISTORY_TOP(), sortUtil.getHISTORY_BOT());
-        } else {
+        } else if (sortUtil.getHISTORY_TOP() == 5) {
             SetForTest(sortUtil.getHISTORY_TOP(), sortUtil.getHISTORY_BOT());
         }
     }
@@ -261,27 +145,145 @@ public class HistoryFragment extends BaseFragment implements View.OnClickListene
     @Override
     public View initView() {
         View view = View.inflate(getActivity(), R.layout.home_history, null);
+        map = new HashMap<String, String>();
+        map.put("user_id", MainActivity.userid);
         assignViews(view);
-
-     /*   fm = getActivity().getSupportFragmentManager();
-        ft = fm.beginTransaction();
-        weightFragment = new WeightFragment();
-        ft.replace(R.id.ll_history_content, weightFragment);
-        ft.commit();*/
         return view;
     }
 
     @Override
     public void initData() {
-
+        getDayContent(map, WEBUtils.AllDayWeightUrl);
+        historyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getActivity(), "position:" + position, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), HistoryChildActivity.class);
+                if (sortUtil.getHISTORY_BOT() == 1) {
+                    AllDayWeightBean.DataEntity dataEntity = allDayWeightBeandata.get(position);
+                    intent.putExtra("day", dataEntity.day);
+                    intent.putExtra("month", dataEntity.month);
+                    intent.putExtra("year", dataEntity.year);
+                } else if (sortUtil.getHISTORY_BOT() == 2) {
+                    AllWeekWeightBean.DataEntity dataEntity = allWeekWeightBeandata.get(position);
+                    intent.putExtra("week", dataEntity.week);
+                    intent.putExtra("month", dataEntity.month);
+                    intent.putExtra("year", dataEntity.year);
+                }else {
+                    AllMonthWeightBean.DataEntity dataEntity = allMonthWeightBeandata.get(position);
+                    intent.putExtra("month", dataEntity.month);
+                    intent.putExtra("year", dataEntity.year);
+                }
+                startActivity(intent);
+            }
+        });
     }
-    public String[] titleStrings = new String[]{"体重历史数据", "体成分历史数据", "血糖历史数据", "血压历史数据", "体温历史数据"};
+
+    private void getDayContent(HashMap<String, String> map, String url) {
+        XUtils.xUtilsPost(url, map, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("mafuhua", result.toString());
+                if (sortUtil.getHISTORY_BOT() == 1) {
+                    parseDayWeight(result);
+                } else if (sortUtil.getHISTORY_BOT() == 2) {
+                    Log.d("mafuhua", "hah");
+                    parseWeekWeight(result);
+                } else {
+                    parseMonthWeight(result);
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable, boolean b) {
+                Log.d("mafuhua", "b1:" + b);
+            }
+
+            @Override
+            public void onCancelled(CancelledException e) {
+
+            }
+
+            @Override
+            public void onFinished() {
+                Log.d("mafuhua", "wan1cheng");
+            }
+        });
+    }
+
+    private void parseMonthWeight(String result) {
+        type = 0;
+        dateList.clear();
+        timeList.clear();
+        Gson gson = new Gson();
+        AllMonthWeightBean allMonthWeightBean = gson.fromJson(result, AllMonthWeightBean.class);
+        allMonthWeightBeandata = allMonthWeightBean.data;
+        for (int i = 0; i < allMonthWeightBeandata.size(); i++) {
+            String month = allMonthWeightBeandata.get(i).month;
+            String year = allMonthWeightBeandata.get(i).year;
+            String date = year + "年" + month + "月";
+            dateList.add(date);
+
+        }
+        historyListView.setAdapter(myAdapter);
+        myAdapter.notifyDataSetChanged();
+    }
+
+    private void parseWeekWeight(String result) {
+        dateList.clear();
+        timeList.clear();
+        type = 1;
+        Gson gson = new Gson();
+        AllWeekWeightBean allWeekWeightBean = gson.fromJson(result, AllWeekWeightBean.class);
+        allWeekWeightBeandata = allWeekWeightBean.data;
+        for (int i = 0; i < allWeekWeightBeandata.size(); i++) {
+            String year = allWeekWeightBeandata.get(i).year;
+            String month = allWeekWeightBeandata.get(i).month;
+            String lastsunday = allWeekWeightBeandata.get(i).lastsunday;
+            String thissaturday = allWeekWeightBeandata.get(i).thissaturday;
+            String week = allWeekWeightBeandata.get(i).week;
+            String date = year + "." + month + "." + lastsunday + "~" + year + "." + month + "." + thissaturday;
+            timeList.add("第" + week + "周");
+            dateList.add(date);
+
+
+        }
+        historyListView.setAdapter(myAdapter);
+        myAdapter.notifyDataSetChanged();
+    }
+
+    private void parseDayWeight(String result) {
+        dateList.clear();
+        type = 0;
+        Gson gson = new Gson();
+        AllDayWeightBean allDayWeightBean = gson.fromJson(result, AllDayWeightBean.class);
+        allDayWeightBeandata = allDayWeightBean.data;
+        for (int i = 0; i < allDayWeightBeandata.size(); i++) {
+            String day = allDayWeightBeandata.get(i).day;
+            String month = allDayWeightBeandata.get(i).month;
+            String year = allDayWeightBeandata.get(i).year;
+            if (day.equals(null)) {
+                String date = year + "年" + month + "月";
+                dateList.add(date);
+            } else {
+                String date = year + "年" + month + "月" + day + "日";
+                dateList.add(date);
+            }
+
+
+        }
+        historyListView.setAdapter(myAdapter);
+        myAdapter.notifyDataSetChanged();
+    }
+
     public void initTitleBar(int position) {
         appTitle.setVisibility(View.GONE);
         titleHome.setText(titleStrings[position]);
         titleHome.setVisibility(View.VISIBLE);
         btnConfig.setVisibility(View.GONE);
-        btnReturn.setVisibility(View.GONE);}
+        btnReturn.setVisibility(View.GONE);
+    }
+
     public void resetTabBottom() {
         iconHistoryTitle1.setImageDrawable(getResources().getDrawable(R.drawable.icon_w_n2x));
         iconHistoryTitle2.setImageDrawable(getResources().getDrawable(R.drawable.icon_body_n2x));
@@ -290,6 +292,7 @@ public class HistoryFragment extends BaseFragment implements View.OnClickListene
         iconHistoryTitle5.setImageDrawable(getResources().getDrawable(R.drawable.icon_tem_n2x));
 
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -297,72 +300,57 @@ public class HistoryFragment extends BaseFragment implements View.OnClickListene
                 resetTabBottom();
                 iconHistoryTitle1.setImageDrawable(getResources().getDrawable(R.drawable.icon_w_s2x));
                 sortUtil.setHISTORY_TOP(1);
-                setTop();
                 setBottom();
-                expandableListView.setAdapter(adapter);
+                initTitleBar(0);
                 break;
             case R.id.icon_history_title2:
                 resetTabBottom();
                 iconHistoryTitle2.setImageDrawable(getResources().getDrawable(R.drawable.icon_body_s2x));
                 sortUtil.setHISTORY_TOP(2);
-                setTop();
                 setBottom();
-                expandableListView.setAdapter(adapter);
+                initTitleBar(1);
                 break;
             case R.id.icon_history_title3:
                 resetTabBottom();
                 iconHistoryTitle3.setImageDrawable(getResources().getDrawable(R.drawable.icon_bg_s2x));
                 sortUtil.setHISTORY_TOP(3);
-                setTop();
                 setBottom();
-                expandableListView.setAdapter(adapter);
+                initTitleBar(2);
                 break;
             case R.id.icon_history_title4:
                 resetTabBottom();
                 iconHistoryTitle4.setImageDrawable(getResources().getDrawable(R.drawable.icon_bp_s2x));
                 sortUtil.setHISTORY_TOP(4);
-                setTop();
                 setBottom();
-                expandableListView.setAdapter(adapter);
+                initTitleBar(3);
                 break;
             case R.id.icon_history_title5:
                 resetTabBottom();
                 iconHistoryTitle5.setImageDrawable(getResources().getDrawable(R.drawable.icon_tem_s2x));
                 sortUtil.setHISTORY_TOP(5);
-                setTop();
                 setBottom();
-                expandableListView.setAdapter(adapter);
+                initTitleBar(4);
                 break;
             case R.id.btn_day:
                 resetButtonColor(btnDay);
                 sortUtil.setHISTORY_BOT(1);
                 setBottom();
-                setTop();
-                expandableListView.setAdapter(adapter);
                 break;
-
             case R.id.btn_week:
                 resetButtonColor(btnWeek);
                 sortUtil.setHISTORY_BOT(2);
                 setBottom();
-                setTop();
-                expandableListView.setAdapter(adapter);
                 break;
             case R.id.btn_month:
                 resetButtonColor(btnMonth);
                 sortUtil.setHISTORY_BOT(3);
                 setBottom();
-                setTop();
-                expandableListView.setAdapter(adapter);
                 break;
             case R.id.btn_confirm:
-
                 Toast.makeText(getActivity(), "提交", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_return:
-
                 Toast.makeText(getActivity(), "返回", Toast.LENGTH_SHORT).show();
-
                 break;
         }
 
@@ -375,7 +363,53 @@ public class HistoryFragment extends BaseFragment implements View.OnClickListene
         btn.setBackgroundColor(Color.TRANSPARENT);
     }
 
-    class ViewHolder {
-        public TextView textView;
+    class MyAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return dateList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = View.inflate(getActivity(), R.layout.elv_weight_day_parent, null);
+                viewHolder = new ViewHolder(convertView);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+            if (type == 1) {
+                viewHolder.tvelvweightparent2.setText(dateList.get(position));
+                viewHolder.tvelvweightparent22.setText(timeList.get(position));
+            } else {
+                viewHolder.tvelvweightparent2.setText(dateList.get(position));
+            }
+
+            return convertView;
+        }
+
+        public class ViewHolder {
+            public final TextView tvelvweightparent2;
+            public final TextView tvelvweightparent22;
+            public final View root;
+
+            public ViewHolder(View root) {
+                this.root = root;
+                tvelvweightparent2 = (TextView) root.findViewById(R.id.tv_elv_weight_parent2);
+                tvelvweightparent22 = (TextView) root.findViewById(R.id.tv_elv_weight_parent22);
+            }
+        }
     }
 }

@@ -1,154 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    android:orientation="vertical">
     <include
         android:id="@+id/layout_titlebar"
-        layout="@layout/layout_titlebar" />
+        layout="@layout/layout_titlebar"/>
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/bg_homepage2x"
-        android:layout_height="wrap_content">
-    <LinearLayout
+        android:id="@+id/ll_parentbg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-
-        android:orientation="horizontal">
-
-        <LinearLayout
-
-            android:id="@+id/ll_weightmeasure"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="105dp"
-                android:layout_height="105dp"
-                android:src="@drawable/img_02_homepage2x" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="体重测量"
-                android:textColor="#ffffff"
-                android:textSize="30sp" />
-        </LinearLayout>
+        android:background="@drawable/bg_homepagex"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/ll_compisition"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="105dp"
-                android:layout_height="105dp"
-                android:src="@drawable/img_01_homepage2x" />
+            <LinearLayout
+
+                android:id="@+id/ll_weightmeasure"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/img_02_homepage2x"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="体重测量"
+                    android:textColor="#ffffff"
+                    android:textSize="30sp"/>
+            </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="体成分测试"
-                android:textColor="#ffffff"
-                android:textSize="30sp" />
-        </LinearLayout>
-    </LinearLayout>
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/ll_compisition"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/img_01_homepage2x"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="体成分测试"
+                    android:textColor="#ffffff"
+                    android:textSize="30sp"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_beforelunch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:lines="1"
-            android:text="餐前血糖"
-            android:layout_marginLeft="10dp"
-            android:textColor="#ffffff"
-            android:textSize="30sp" />
-
-        <ImageView
-            android:id="@+id/img_06_homepage2x"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/img_06_homepage2x" />
-
-        <TextView
-            android:id="@+id/tv_afterlunch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:lines="1"
-            android:layout_marginLeft="15dp"
-            android:text="餐后血糖"
-            android:textColor="#ffffff"
-            android:textSize="30sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/white"/>
 
         <LinearLayout
-            android:id="@+id/ll_bloodpressure"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="105dp"
-                android:layout_height="105dp"
-                android:src="@drawable/img_03_homepage2x" />
+            <LinearLayout
+
+                android:id="@+id/ll_beforelunch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/canqian3x"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="餐前血糖"
+                    android:textColor="#ffffff"
+                    android:textSize="30sp"/>
+            </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="血压测量"
-                android:textColor="#ffffff"
-                android:textSize="30sp" />
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"/>
+
+            <LinearLayout
+                android:id="@+id/ll_afterlunch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/canhou2x"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="餐后血糖"
+                    android:textColor="#ffffff"
+                    android:textSize="30sp"/>
+            </LinearLayout>
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/white"/>
+
         <LinearLayout
-            android:id="@+id/ll_tempera"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="105dp"
-                android:layout_height="105dp"
-                android:src="@drawable/img_05_homepage2x" />
+            <LinearLayout
+                android:id="@+id/ll_bloodpressure"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            `<TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="体温测量"
-                android:textColor="#ffffff"
-                android:textSize="30sp" />
+                <ImageView
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/img_03_homepage2x"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="血压测量"
+                    android:textColor="#ffffff"
+                    android:textSize="30sp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"/>
+
+            <LinearLayout
+                android:id="@+id/ll_tempera"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/img_05_homepage2x"/>
+
+                `
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="体温测量"
+                    android:textColor="#ffffff"
+                    android:textSize="30sp"/>
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
     </LinearLayout>
 
 

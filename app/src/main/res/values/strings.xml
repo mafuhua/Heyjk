@@ -10,4 +10,5 @@
     <string name="title_activity_setting_weight">SettingWeightActivity</string>
     <string name="title_activity_setting_sport">SettingSportActivity</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_history_child">HistoryChildActivity</string>
 </resources>

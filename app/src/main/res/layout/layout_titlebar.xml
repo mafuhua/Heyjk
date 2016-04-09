@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="60dp"
-        android:background="#650000FF">
+        android:background="#52c2f0">
 
         <ImageView
             android:id="@+id/btn_return"
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="云健康"
+                android:text="智能健康"
                 android:textColor="#ffffff"
                 android:textSize="33sp" />
         </LinearLayout>
