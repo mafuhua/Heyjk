@@ -53,6 +53,7 @@
             android:name=".activity.HistoryChildActivity"
             android:label="@string/title_activity_history_child" >
         </activity>
+        <activity android:name="org.achartengine.GraphicalActivity" />
     </application>
 
 </manifest>

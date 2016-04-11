@@ -35,6 +35,7 @@ import java.util.List;
  * Created by hellofuhua on 2016/2/21.
  */
 public class CurveFragment extends BaseFragment implements View.OnClickListener {
+    public static SortUtil sortUtil;
     public LinearLayout appTitle;
     public ImageView btnReturn;
     public ImageView btnConfig;
@@ -52,7 +53,6 @@ public class CurveFragment extends BaseFragment implements View.OnClickListener 
     private Button btnMonth;
     private List<String> dateList;
     private List<String> timeList;
-    public static SortUtil sortUtil;
     private ListView historyListView;
     private MyAdapter myAdapter;
     private List<AllDayWeightBean.DataEntity> allDayWeightBeandata;
@@ -159,22 +159,34 @@ public class CurveFragment extends BaseFragment implements View.OnClickListener 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getActivity(), "position:" + position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), CurveActivity.class);
+                HashMap<String, String> map = new HashMap<String, String>();
+                // AverageTemperatureChart averageTemperatureChart = new AverageTemperatureChart();
                 if (sortUtil.getHISTORY_BOT() == 1) {
                     AllDayWeightBean.DataEntity dataEntity = allDayWeightBeandata.get(position);
+                    map.put("day", dataEntity.day);
+                    map.put("month", dataEntity.month);
+                    map.put("year", dataEntity.year);
                     intent.putExtra("day", dataEntity.day);
                     intent.putExtra("month", dataEntity.month);
                     intent.putExtra("year", dataEntity.year);
                 } else if (sortUtil.getHISTORY_BOT() == 2) {
                     AllWeekWeightBean.DataEntity dataEntity = allWeekWeightBeandata.get(position);
+                    map.put("week", dataEntity.week);
+                    map.put("month", dataEntity.month);
+                    map.put("year", dataEntity.year);
                     intent.putExtra("week", dataEntity.week);
                     intent.putExtra("month", dataEntity.month);
                     intent.putExtra("year", dataEntity.year);
                 } else {
                     AllMonthWeightBean.DataEntity dataEntity = allMonthWeightBeandata.get(position);
+                    map.put("month", dataEntity.month);
+                    map.put("year", dataEntity.year);
                     intent.putExtra("month", dataEntity.month);
                     intent.putExtra("year", dataEntity.year);
                 }
+                // averageTemperatureChart.execute(getActivity(),map);
                 startActivity(intent);
+
             }
         });
     }
@@ -183,7 +195,7 @@ public class CurveFragment extends BaseFragment implements View.OnClickListener 
         XUtils.xUtilsPost(url, map, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d("mafuhua", result.toString());
+                Log.d("mafuhua", "=======" + result.toString());
                 if (sortUtil.getHISTORY_BOT() == 1) {
                     parseDayWeight(result);
                 } else if (sortUtil.getHISTORY_BOT() == 2) {

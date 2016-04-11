@@ -7,7 +7,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.google.gson.Gson;
 import com.yuenkeji.heyjk.bean.MouDayBloopBean;
@@ -22,7 +24,6 @@ import com.yuenkeji.heyjk.bean.MouWeekBody;
 import com.yuenkeji.heyjk.bean.MouWeekTemBean;
 import com.yuenkeji.heyjk.bean.MouWeekWeight;
 import com.yuenkeji.heyjk.fragment.CurveFragment;
-import com.yuenkeji.heyjk.fragment.HistoryFragment;
 import com.yuenkeji.heyjk.utils.SortUtil;
 import com.yuenkeji.heyjk.utils.WEBUtils;
 import com.yuenkeji.heyjk.utils.XUtils;
@@ -41,7 +42,6 @@ import java.util.List;
 
 public class CurveActivity extends Activity {
     public Gson gson;
-    private Context context;
     private SortUtil sortUtil;
     private String day;
     private String month;
@@ -49,15 +49,16 @@ public class CurveActivity extends Activity {
     private String week;
     private List<String> XLabel = new ArrayList<>();
     private List<String> dataXList = new ArrayList<>();
-    private List<String> dataYList = new ArrayList<>();
     private List<String> dataBotList = new ArrayList<>();
     private String[] titles;
+    private List<double[]> dataYList = new ArrayList<>();
+    private Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        sortUtil = HistoryFragment.sortUtil;
+        sortUtil = CurveFragment.sortUtil;
         gson = new Gson();
         Intent intent = getIntent();
         year = intent.getStringExtra("year");
@@ -96,33 +97,57 @@ public class CurveActivity extends Activity {
                 getMonthChild(WEBUtils.MouMonthTemperatureUrl);
             }
         }
-        creatCurveTu();
+        // creatCurveTu();
     }
 
-    private void creatCurveTu() {
-        String[] titles = new String[]{"脂肪率", "水分率", "菇凉", "体温"};
-        List x = new ArrayList();
-        List y = new ArrayList();
-        x.add(new double[]{5, 9, 4, 6, 3, 15});
-        x.add(new double[]{1, 3, 5, 7, 9, 11});
-        x.add(new double[]{9, 3, 5, 7, 9, 1});
-        x.add(new double[]{0, 2, 4, 6, 8, 10});
+    private void creatCurveTu2() {
+        String[] titles = new String[]{"菇凉", "体温"};
+        List<double[]> x = new ArrayList<double[]>();
+        for (int i = 0; i < titles.length; i++) {
+            x.add(new double[]{0, 5, 10});
+        }
 
-        y.add(new double[]{3, 14, 5, 30, 20, 25});
-        y.add(new double[]{18, 9, 21, 15, 10, 6});
-        y.add(new double[]{13, 4, 15, 3, 25, 20});
-        y.add(new double[]{12, 9, 21, 19, 15, 16});
-        XYMultipleSeriesDataset dataset = buildDataset(titles, x, y);
+        XYMultipleSeriesDataset dataset = buildDataset(titles, x, dataYList);
 
-        int[] colors = new int[]{Color.BLUE, Color.BLACK, Color.RED, Color.GREEN};
-        PointStyle[] styles = new PointStyle[]{PointStyle.CIRCLE, PointStyle.DIAMOND, PointStyle.SQUARE, PointStyle.TRIANGLE};
+        int[] colors = new int[]{Color.BLUE, Color.BLACK, Color.RED, Color.GRAY, Color.GREEN};
+        PointStyle[] styles = new PointStyle[]{PointStyle.CIRCLE, PointStyle.DIAMOND};
         XYMultipleSeriesRenderer renderer = buildRenderer(colors, styles, true);
 
-        setChartSettings(renderer, "Line Chart Demo", "X", "Y", -1, 20, 0, 40, Color.WHITE, Color.WHITE);
+        setChartSettings(renderer, "Line Chart Demo", "X", "Y", -1, 10, 0, 100, Color.WHITE, Color.WHITE);
 
         View chart = ChartFactory.getLineChartView(this, dataset, renderer);
 
         setContentView(chart);
+    }
+
+    private void creatCurveTu(String[] titles, double xbigger) {
+        List<double[]> x = new ArrayList<double[]>();
+        int[] colors = new int[]{Color.BLUE, Color.GRAY, Color.BLACK, Color.RED, Color.GREEN};
+        PointStyle[] styles = new PointStyle[]{PointStyle.CIRCLE, PointStyle.DIAMOND, PointStyle.SQUARE, PointStyle.POINT, PointStyle.TRIANGLE};
+        int[] mycolors = new int[titles.length];
+        PointStyle[] mystyles = new PointStyle[titles.length];
+        int length = dataYList.get(0).length;
+        double[] doubles = new double[length];
+        for (int i = 0; i < titles.length; i++) {
+            for (int j = 0; j < length; j++) {
+                doubles[j] = (double) j;
+            }
+            mycolors[i] = colors[i];
+            mystyles[i] = styles[i];
+            x.add(doubles);
+        }
+
+        XYMultipleSeriesDataset dataset = buildDataset(titles, x, dataYList);
+        XYMultipleSeriesRenderer renderer = buildRenderer(mycolors, mystyles, true);
+        setChartSettings(renderer, "Line Chart Demo", "X", "Y", 0, length-1, 0, xbigger, Color.WHITE, Color.WHITE);
+        View chart = ChartFactory.getLineChartView(this, dataset, renderer);
+        setContentView(chart);
+        WindowManager m = getWindowManager();
+        Display d = m.getDefaultDisplay(); // 为获取屏幕宽、高
+        android.view.WindowManager.LayoutParams p = getWindow().getAttributes();
+        p.height = (int) (d.getHeight() * 0.7); // 高度设置为屏幕的0.8
+        p.width = (int) (d.getWidth()*0.95); // 宽度设置为屏幕的0.7
+        getWindow().setAttributes(p);
     }
 
     protected XYMultipleSeriesDataset buildDataset(String[] titles,
@@ -174,33 +199,24 @@ public class CurveActivity extends Activity {
         // renderer.setChartTitle("当日测量血压数据值");
         renderer.setLabelsTextSize(35); // 设置轴标签文本大小
         renderer.setLegendTextSize(35); // 设置图例文本大小
-        renderer.setMargins(new int[]{50, 50, 300, 50}); // 设置4边留白
+        renderer.setMargins(new int[]{80, 80, 80, 80}); // 设置4边留白
         renderer.setPanEnabled(false, false); // 设置x,y坐标轴不会因用户划动屏幕而移动
         renderer.setMarginsColor(Color.argb(0, 0xff, 0, 0));// 设置4边留白透明
         renderer.setBackgroundColor(Color.TRANSPARENT); // 设置背景色透明
         renderer.setApplyBackgroundColor(true); // 使背景色生效
         renderer.setXLabels(0);// 设置X轴显示12个点，根据setChartSettings的最大值和最小值自动计算点的间隔
-        renderer.setYLabels(12);// 设置y轴显示10个点,根据setChartSettings的最大值和最小值自动计算点的间隔
+        renderer.setYLabels(8);// 设置y轴显示10个点,根据setChartSettings的最大值和最小值自动计算点的间隔
         renderer.setXLabelsAlign(Paint.Align.CENTER);// 刻度线与刻度标注之间的相对位置关系
         renderer.setYLabelsAlign(Paint.Align.CENTER);// 刻度线与刻度标注之间的相对位置关系
         // render.setZoomButtonsVisible(true);// 是否显示放大缩小按钮
         renderer.setShowGrid(true);// 是否显示网格
         renderer.setGridColor(Color.GRAY);// 设置网格颜色
         renderer.setAxesColor(Color.RED);// 设置X.y轴颜色
-        renderer.setFitLegend(true);// 设置自动按比例缩放
+        renderer.setFitLegend(false);// 设置自动按比例缩放
         // renderer.setYAxisMax(200.0); // 设置Y轴最大值
         //  renderer.setYAxisMin(40.0); // 设置Y轴最小值
-        XLabel.add("11.00");
-        XLabel.add("11.00");
-        XLabel.add("11.00");
-        XLabel.add("11.00");
-        XLabel.add("11.00");
-        XLabel.add("11.00");
-        XLabel.add("11.00");
-        XLabel.add("11.00");
-        XLabel.add("11.00");
         for (int i = 0; i < XLabel.size(); i++) {
-            renderer.addXTextLabel(i * 5, XLabel.get(i));
+            renderer.addXTextLabel(i, XLabel.get(i));
             //  mRenderer.addXTextLabel(i, XLabel.get(i));//这边是自定义自己的标签,显示自己想要的X轴的标签,需要注意的是需要setXLabels(0)放在标签重叠(就是自定义的标签与图表默认的标签)
         }
 
@@ -262,7 +278,6 @@ public class CurveActivity extends Activity {
             }
         });
     }
-
 
     public void getWeekChild(String url) {
         HashMap<String, String> map = new HashMap<String, String>();
@@ -340,33 +355,41 @@ public class CurveActivity extends Activity {
         });
     }
 
-
     private void parseDayWeight(String result) {
         MouDayWeightBean mouDayWeightBean = gson.fromJson(result, MouDayWeightBean.class);
         List<MouDayWeightBean.DataBean> data = mouDayWeightBean.data;
         titles = new String[]{"体重", "BMI"};
-        int[] xbmi = new int[]{};
-        int[] xtizhong = new int[]{};
-        List xbmilist = new ArrayList();
+        double[] xbmi = new double[data.size()];
+        double[] xtizhong = new double[data.size()];
+        List<double[]> xbmilist = new ArrayList();
         List ybmilist = new ArrayList();
+        double bigger = 0;
         for (int i = 0; i < data.size(); i++) {
             String hour = data.get(i).hour;
             String minute = data.get(i).minute;
             XLabel.add(hour + ":" + minute);
-            xbmi[i] = Integer.parseInt(data.get(i).bmi, 10);
-            xtizhong[i] = Integer.parseInt(data.get(i).tizhongcheng, 10);
+            xbmi[i] = Double.parseDouble(data.get(i).bmi);
+            xtizhong[i] = Double.parseDouble(data.get(i).tizhongcheng);
+            bigger = xtizhong[i] > bigger ? xtizhong[i] : bigger;
         }
-        xbmilist.add(xtizhong);
-        xbmilist.add(xbmi);
+        dataYList.add(xtizhong);
+        dataYList.add(xbmi);
+        creatCurveTu(titles, bigger);
 
     }
 
     private void parseDayBody(String result) {
         MouDayBodyBean mouDayBodyBean = gson.fromJson(result, MouDayBodyBean.class);
         List<MouDayBodyBean.DataBean> data = mouDayBodyBean.data;
-        titles = new String[]{"肌肉率", "水分量", "脂肪率", "骨量", "BMR", "内脏等级"};
-        for (int i = 0; i < data.size(); i++) {
-            String bmr = data.get(i).bmr;
+        titles = new String[]{"肌肉率", "水分量", "脂肪率", "骨量", "内脏等级"};
+        int size = data.size();
+        double bigger = 0;
+        double[] xshuifenlv = new double[size];
+        double[] xzhifanglv = new double[size];
+        double[] xneizang = new double[size];
+        double[] xjiroulv = new double[size];
+        double[] xguliang = new double[size];
+        for (int i = 0; i < size; i++) {
             String guliang = data.get(i).guliang;
             String hour = data.get(i).hour;
             String jiroulv = data.get(i).jiroulv;
@@ -375,8 +398,19 @@ public class CurveActivity extends Activity {
             String zhifanglv = data.get(i).zhifanglv;
             String shuifenlv = data.get(i).shuifenlv;
             XLabel.add(hour + ":" + minute);
-
+            xshuifenlv[i] = Double.parseDouble(shuifenlv);
+            xzhifanglv[i] = Double.parseDouble(zhifanglv);
+            xneizang[i] = Double.parseDouble(neizang);
+            xjiroulv[i] = Double.parseDouble(jiroulv);
+            xguliang[i] = Double.parseDouble(guliang);
+            bigger = xshuifenlv[i] > bigger ? xshuifenlv[i] : bigger;
         }
+        dataYList.add(xjiroulv);
+        dataYList.add(xshuifenlv);
+        dataYList.add(xzhifanglv);
+        dataYList.add(xguliang);
+        dataYList.add(xneizang);
+        creatCurveTu(titles, bigger);
 
     }
 
@@ -384,6 +418,11 @@ public class CurveActivity extends Activity {
         MouDayBloopBean mouDayBloopBean = gson.fromJson(result, MouDayBloopBean.class);
         List<MouDayBloopBean.DataBean> data = mouDayBloopBean.data;
         titles = new String[]{"脉搏", "高压", "低压"};
+        int size = data.size();
+        double bigger = 0;
+        double[] xmaibo = new double[size];
+        double[] xshousuoya = new double[size];
+        double[] xshuzhangya = new double[size];
         for (int i = 0; i < data.size(); i++) {
             String maibo = data.get(i).maibo;
             String hour = data.get(i).hour;
@@ -391,44 +430,70 @@ public class CurveActivity extends Activity {
             String shousuoya = data.get(i).shousuoya;
             String shuzhangya = data.get(i).shuzhangya;
             XLabel.add(hour + ":" + minute);
+            xmaibo[i] = Double.parseDouble(maibo);
+            xshousuoya[i] = Double.parseDouble(shousuoya);
+            xshuzhangya[i] = Double.parseDouble(shuzhangya);
+            bigger = xshuzhangya[i] > bigger ? xshuzhangya[i] : bigger;
         }
+        dataYList.add(xmaibo);
+        dataYList.add(xshuzhangya);
+        dataYList.add(xshousuoya);
+        creatCurveTu(titles, bigger);
     }
 
     private void parseDayTem(String result) {
         MouDayTemBean mouDayTemBean = gson.fromJson(result, MouDayTemBean.class);
         List<MouDayTemBean.DataBean> data = mouDayTemBean.data;
         titles = new String[]{"体温"};
+        double bigger = 0;
+        double[] xtiwen = new double[data.size()];
         for (int i = 0; i < data.size(); i++) {
             String tiwen = data.get(i).tiwen;
             String hour = data.get(i).hour;
             String minute = data.get(i).minute;
             XLabel.add(hour + ":" + minute);
+            XLabel.add(year + "." + month + "." + day);
+            xtiwen[i] = Double.parseDouble(tiwen);
+            bigger = xtiwen[i] > bigger ? xtiwen[i] : bigger;
         }
-
+        dataYList.add(xtiwen);
+        creatCurveTu(titles, bigger);
     }
 
     private void parseWeekWeight(String result) {
         MouWeekWeight mouWeekWeight = gson.fromJson(result, MouWeekWeight.class);
         List<MouWeekWeight.DataBean> data = mouWeekWeight.data;
-        titles = new String[]{"体重"};
+        titles = new String[]{"体重", "BMI"};
+        double bigger = 0;
+        double[] xbmi = new double[data.size()];
+        double[] xtizhong = new double[data.size()];
         for (int i = 0; i < data.size(); i++) {
-            String bmi = data.get(i).bmi;
             String day = data.get(i).day;
             String month = data.get(i).month;
             String year = data.get(i).year;
-            String tizhongcheng = data.get(i).tizhongcheng;
             XLabel.add(year + "." + month + "." + day);
-
+            xbmi[i] = Double.parseDouble(data.get(i).bmi);
+            xtizhong[i] = Double.parseDouble(data.get(i).tizhongcheng);
+            bigger = xtizhong[i] > bigger ? xtizhong[i] : bigger;
         }
+        dataYList.add(xtizhong);
+        dataYList.add(xbmi);
+        creatCurveTu(titles, bigger);
 
     }
 
     private void parseWeekBody(String result) {
         MouWeekBody mouWeekBody = gson.fromJson(result, MouWeekBody.class);
         List<MouWeekBody.DataBean> data = mouWeekBody.data;
-        titles = new String[]{"肌肉率", "水分量", "脂肪率", "骨量", "BMR", "内脏等级"};
+        titles = new String[]{"肌肉率", "水分量", "脂肪率", "骨量", "内脏等级"};
+        int size = data.size();
+        double bigger = 0;
+        double[] xshuifenlv = new double[size];
+        double[] xzhifanglv = new double[size];
+        double[] xneizang = new double[size];
+        double[] xjiroulv = new double[size];
+        double[] xguliang = new double[size];
         for (int i = 0; i < data.size(); i++) {
-            String bmr = data.get(i).bmr;
             String guliang = data.get(i).guliang;
             String jiroulv = data.get(i).jiroulv;
             String neizang = data.get(i).neizang;
@@ -438,8 +503,19 @@ public class CurveActivity extends Activity {
             String month = data.get(i).month;
             String year = data.get(i).year;
             XLabel.add(year + "." + month + "." + day);
-
+            xshuifenlv[i] = Double.parseDouble(shuifenlv);
+            xzhifanglv[i] = Double.parseDouble(zhifanglv);
+            xneizang[i] = Double.parseDouble(neizang);
+            xjiroulv[i] = Double.parseDouble(jiroulv);
+            xguliang[i] = Double.parseDouble(guliang);
+            bigger = xshuifenlv[i] > bigger ? xshuifenlv[i] : bigger;
         }
+        dataYList.add(xjiroulv);
+        dataYList.add(xshuifenlv);
+        dataYList.add(xzhifanglv);
+        dataYList.add(xguliang);
+        dataYList.add(xneizang);
+        creatCurveTu(titles, bigger);
 
     }
 
@@ -447,6 +523,11 @@ public class CurveActivity extends Activity {
         MouWeekBloodpBean mouWeekBloodpBean = gson.fromJson(result, MouWeekBloodpBean.class);
         List<MouWeekBloodpBean.DataBean> data = mouWeekBloodpBean.data;
         titles = new String[]{"脉搏", "高压", "低压"};
+        int size = data.size();
+        double bigger = 0;
+        double[] xmaibo = new double[size];
+        double[] xshousuoya = new double[size];
+        double[] xshuzhangya = new double[size];
         for (int i = 0; i < data.size(); i++) {
             String maibo = data.get(i).maibo;
             String day = data.get(i).day;
@@ -455,7 +536,15 @@ public class CurveActivity extends Activity {
             String shousuoya = data.get(i).shousuoya;
             String shuzhangya = data.get(i).shuzhangya;
             XLabel.add(year + "." + month + "." + day);
+            xmaibo[i] = Double.parseDouble(maibo);
+            xshousuoya[i] = Double.parseDouble(shousuoya);
+            xshuzhangya[i] = Double.parseDouble(shuzhangya);
+            bigger = xshuzhangya[i] > bigger ? xshuzhangya[i] : bigger;
         }
+        dataYList.add(xmaibo);
+        dataYList.add(xshuzhangya);
+        dataYList.add(xshousuoya);
+        creatCurveTu(titles, bigger);
 
     }
 
@@ -463,37 +552,58 @@ public class CurveActivity extends Activity {
         MouWeekTemBean mouWeekTemBean = gson.fromJson(result, MouWeekTemBean.class);
         List<MouWeekTemBean.DataBean> data = mouWeekTemBean.data;
         titles = new String[]{"体温"};
+        double bigger = 0;
+        double[] xtiwen = new double[data.size()];
         for (int i = 0; i < data.size(); i++) {
             String tiwen = data.get(i).tiwen;
             String day = data.get(i).day;
             String month = data.get(i).month;
             String year = data.get(i).year;
             XLabel.add(year + "." + month + "." + day);
-
+            xtiwen[i] = Double.parseDouble(tiwen);
+            bigger = xtiwen[i] > bigger ? xtiwen[i] : bigger;
         }
+        dataYList.add(xtiwen);
+        creatCurveTu(titles, bigger);
 
     }
 
     private void parseMonthWeight(String result) {
         MouDayWeightBean mouDayWeightBean = gson.fromJson(result, MouDayWeightBean.class);
         List<MouDayWeightBean.DataBean> data = mouDayWeightBean.data;
-        titles = new String[]{"体重"};
+        titles = new String[]{"体重", "BMI"};
+        double bigger = 0;
+        double[] xbmi = new double[data.size()];
+        double[] xtizhong = new double[data.size()];
         for (int i = 0; i < data.size(); i++) {
             String bmi = data.get(i).bmi;
             String hour = data.get(i).hour;
             String minute = data.get(i).minute;
             String tizhongcheng = data.get(i).tizhongcheng;
             XLabel.add(hour + ":" + minute);
+            XLabel.add(year + "." + month + "." + day);
+            xbmi[i] = Double.parseDouble(bmi);
+            xtizhong[i] = Double.parseDouble(tizhongcheng);
+            bigger = xtizhong[i] > bigger ? xtizhong[i] : bigger;
         }
+        dataYList.add(xtizhong);
+        dataYList.add(xbmi);
+        creatCurveTu(titles, bigger);
 
     }
 
     private void parseMonthBody(String result) {
         MouMonthBodyBean mouMonthBodyBean = gson.fromJson(result, MouMonthBodyBean.class);
         List<MouMonthBodyBean.DataBean> data = mouMonthBodyBean.data;
-        titles = new String[]{"肌肉率", "水分量", "脂肪率", "骨量", "BMR", "内脏等级"};
+        titles = new String[]{"肌肉率", "水分量", "脂肪率", "骨量", "内脏等级"};
+        int size = data.size();
+        double bigger = 0;
+        double[] xshuifenlv = new double[size];
+        double[] xzhifanglv = new double[size];
+        double[] xneizang = new double[size];
+        double[] xjiroulv = new double[size];
+        double[] xguliang = new double[size];
         for (int i = 0; i < data.size(); i++) {
-            String bmr = data.get(i).bmr;
             String guliang = data.get(i).guliang;
             String jiroulv = data.get(i).jiroulv;
             String neizang = data.get(i).neizang;
@@ -503,9 +613,19 @@ public class CurveActivity extends Activity {
             String month = data.get(i).month;
             String year = data.get(i).year;
             XLabel.add(year + "." + month + "." + day);
-
-
+            xshuifenlv[i] = Double.parseDouble(shuifenlv);
+            xzhifanglv[i] = Double.parseDouble(zhifanglv);
+            xneizang[i] = Double.parseDouble(neizang);
+            xjiroulv[i] = Double.parseDouble(jiroulv);
+            xguliang[i] = Double.parseDouble(guliang);
+            bigger = xshuifenlv[i] > bigger ? xshuifenlv[i] : bigger;
         }
+        dataYList.add(xjiroulv);
+        dataYList.add(xshuifenlv);
+        dataYList.add(xzhifanglv);
+        dataYList.add(xguliang);
+        dataYList.add(xneizang);
+        creatCurveTu(titles, bigger);
 
     }
 
@@ -513,6 +633,11 @@ public class CurveActivity extends Activity {
         MouMonthBloodpBean mouMonthBloodpBean = gson.fromJson(result, MouMonthBloodpBean.class);
         List<MouMonthBloodpBean.DataBean> data = mouMonthBloodpBean.data;
         titles = new String[]{"脉搏", "高压", "低压"};
+        int size = data.size();
+        double bigger = 0;
+        double[] xmaibo = new double[size];
+        double[] xshousuoya = new double[size];
+        double[] xshuzhangya = new double[size];
         for (int i = 0; i < data.size(); i++) {
             String maibo = data.get(i).maibo;
             String day = data.get(i).day;
@@ -521,7 +646,16 @@ public class CurveActivity extends Activity {
             String shousuoya = data.get(i).shousuoya;
             String shuzhangya = data.get(i).shuzhangya;
             XLabel.add(year + "." + month + "." + day);
+            xmaibo[i] = Double.parseDouble(maibo);
+            xshousuoya[i] = Double.parseDouble(shousuoya);
+            xshuzhangya[i] = Double.parseDouble(shuzhangya);
+            bigger = xshuzhangya[i] > bigger ? xshuzhangya[i] : bigger;
         }
+        dataYList.add(xmaibo);
+        dataYList.add(xshuzhangya);
+        dataYList.add(xshousuoya);
+        creatCurveTu(titles, bigger);
+
 
     }
 
@@ -529,14 +663,19 @@ public class CurveActivity extends Activity {
         MouMonthTemBean mouMonthTemBean = gson.fromJson(result, MouMonthTemBean.class);
         List<MouMonthTemBean.DataBean> data = mouMonthTemBean.data;
         titles = new String[]{"体温"};
+        double bigger = 0;
+        double[] xtiwen = new double[data.size()];
         for (int i = 0; i < data.size(); i++) {
             String tiwen = data.get(i).tiwen;
             String day = data.get(i).day;
             String month = data.get(i).month;
             String year = data.get(i).year;
             XLabel.add(year + "." + month + "." + day);
+            xtiwen[i] = Double.parseDouble(tiwen);
+            bigger = xtiwen[i] > bigger ? xtiwen[i] : bigger;
         }
-
+        dataYList.add(xtiwen);
+        creatCurveTu(titles, bigger);
     }
 
 }

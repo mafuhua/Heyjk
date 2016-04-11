@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="15dp">
 
         <EditText
             android:id="@+id/et_login_num"
