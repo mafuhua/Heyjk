@@ -1,275 +1,291 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <include
         android:id="@+id/layout_titlebar"
-        layout="@layout/layout_titlebar" />
-<LinearLayout
-    android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:layout_height="wrap_content">
+        layout="@layout/layout_titlebar"/>
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_marginTop="100dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="脂肪率"
-                android:textSize="23sp"
-                android:id="@+id/textView" />
-            <ImageView
-                android:id="@+id/leftup"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginLeft="15dp"
-                android:src="@drawable/img_01_tichengfen2x"
-                android:layout_below="@+id/textView"
-                android:layout_alignEnd="@+id/textView" />
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:text="00%"
-                android:maxLines="1"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:id="@+id/tv_zhifang"
-                android:layout_alignTop="@+id/leftup"
+                android:layout_marginTop="100dp">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="脂肪率"
+                    android:textSize="23sp"/>
+
+                <ImageView
+                    android:id="@+id/leftup"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignEnd="@+id/textView"
+                    android:layout_below="@+id/textView"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/img_01_tichengfen2x"/>
+
+                <TextView
+                    android:id="@+id/tv_zhifang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/leftup"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="25dp"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="00%"
+                    android:textSize="18sp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp">
+
+                <TextView
+                    android:id="@+id/tv_guliang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="25dp"
+                    android:text="0.0kg"
+                    android:textSize="18sp"/>
+
+                <ImageView
+                    android:id="@+id/leftdown"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/img_01_tichengfen2x"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/leftdown"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:text="骨量"
+                    android:textSize="23sp"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/textView201"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="肌肉率"
+                    android:textSize="23sp"/>
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_below="@id/textView201"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/img_01_tichengfen2x"/>
+
+                <TextView
+                    android:id="@+id/tv_jirou"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textView201"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="00%"
+                    android:textSize="18sp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="25dp" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_marginTop="100dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_guliang"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:layout_marginLeft="25dp"
-                android:text="0.0kg"
-                android:textSize="18sp" />
-            <ImageView
-                android:id="@+id/leftdown"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="15dp"
-                android:src="@drawable/img_01_tichengfen2x" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/leftdown"
-                android:text="骨量"
-                android:textSize="23sp" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:orientation="vertical">
-        <RelativeLayout
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/textView201"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="肌肉率"
-                android:textSize="23sp" />
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_below="@id/textView201"
-                android:layout_marginLeft="15dp"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/img_01_tichengfen2x" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:text="00%"
-                android:layout_marginTop="20dp"
-                android:layout_below="@id/textView201"
-                android:textSize="18sp"
-                android:id="@+id/tv_jirou"
                 android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_marginTop="50dp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:layout_marginTop="50dp">
 
-            <ImageView
-                android:id="@+id/center"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/img_01_tichengfen2x" />
+                <ImageView
+                    android:id="@+id/center"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/img_01_tichengfen2x"/>
 
 
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignBottom="@id/center"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="80dp"
-                android:src="@drawable/img_w2x" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/center"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="40dp"
-                android:text="0.0"
-                android:textSize="33sp"
-                android:id="@+id/tv_tizhong" />
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignBottom="@id/center"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="80dp"
+                    android:src="@drawable/img_w2x"/>
+
+                <TextView
+                    android:id="@+id/tv_tizhong"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/center"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="40dp"
+                    android:text="0.0"
+                    android:textSize="33sp"/>
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/center"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="10dp"
-                android:text="kg"
-                android:textSize="33sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/center"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:text="kg"
+                    android:textSize="33sp"/>
 
 
+            </RelativeLayout>
 
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_marginTop="50dp"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_bmr"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-android:gravity="center"
-                android:text="0.0kg"
-                android:textSize="18sp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true" />
-            <ImageView
-                android:id="@+id/leftdown2"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="15dp"
+                android:layout_marginTop="50dp"
+                android:gravity="center">
 
-                android:layout_centerInParent="true"
-                android:src="@drawable/img_01_tichengfen2x" />
+                <TextView
+                    android:id="@+id/tv_bmr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="0.0kg"
+                    android:textSize="16sp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/leftdown2"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_centerInParent="true"
+
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/img_01_tichengfen2x"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/leftdown2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:text="BMR"
+                    android:textSize="23sp"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="10dp"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/leftdown2"
-                android:text="BMR"
-                android:textSize="23sp" />
-        </RelativeLayout>
+                android:layout_marginTop="100dp">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="水分量"
+                    android:textSize="23sp"/>
+
+                <ImageView
+                    android:id="@+id/leftup3"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignEnd="@+id/textView2"
+                    android:layout_below="@+id/textView2"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/img_01_tichengfen2x"/>
+
+                <TextView
+                    android:id="@+id/tv_shuifen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/leftup3"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="00%"
+                    android:textSize="18sp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp">
+
+                <TextView
+                    android:id="@+id/tv_neizang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="0.0kg"
+                    android:textSize="23sp"/>
+
+                <ImageView
+                    android:id="@+id/leftdown5"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/img_01_tichengfen2x"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/leftdown5"
+
+                    android:layout_marginTop="10dp"
+                    android:text="内脏等级"
+                    android:textSize="20sp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-        <RelativeLayout
-            android:layout_marginTop="100dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="水分量"
-                android:textSize="23sp"
-                android:id="@+id/textView2" />
-            <ImageView
-                android:id="@+id/leftup3"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginLeft="15dp"
-                android:src="@drawable/img_01_tichengfen2x"
-                android:layout_below="@+id/textView2"
-                android:layout_alignEnd="@+id/textView2" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:text="00%"
-                android:maxLines="1"
-                android:textSize="18sp"
-                android:gravity="center"
-                android:id="@+id/tv_shuifen"
-                android:layout_alignTop="@id/leftup3"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_marginTop="100dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_neizang"
-                android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="5dp"
-                android:text="0.0kg"
-                android:textSize="23sp" />
-            <ImageView
-                android:id="@+id/leftdown5"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/img_01_tichengfen2x" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-
-                android:layout_below="@id/leftdown5"
-                android:text="内脏等级"
-                android:textSize="23sp" />
-        </RelativeLayout>
-
-    </LinearLayout>
-
-</LinearLayout>
 </LinearLayout>

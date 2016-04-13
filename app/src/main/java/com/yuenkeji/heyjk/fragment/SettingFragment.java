@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     private ListView lvSetting;
     private Button btSettingQuit;
     private String[] settingText = new String[]{"性别", "年龄", "身高", "体重", "运动类型"};
-    private HashMap<Integer,String> settingMap = new HashMap();
+    private HashMap<Integer, String> settingMap = new HashMap();
     private MyListAdapter myListAdapter;
     private int showYear;
     private int mYear;
@@ -80,10 +81,17 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                 map.put("height", settingMap.get(2));
                 map.put("weight", settingMap.get(3));
                 map.put("sport", sporttype);
+                final String finalSextype = sextype;
+                final String finalSporttype = sporttype;
                 XUtils.xUtilsPost(WEBUtils.UpdateUserUrl, map, new Callback.CommonCallback<String>() {
                     @Override
                     public void onSuccess(String result) {
                         Log.d("mafuhua", "UpdateUserUrl=====" + result);
+                        sharedPreferences.edit().putString("sex", finalSextype)
+                                .putString("sport", finalSporttype)
+                                .putString("birthday", settingMap.get(1))
+                                .putString("height", settingMap.get(2))
+                                .putString("weight", settingMap.get(3)).apply();
                         Toast.makeText(getActivity(), "提交成功", Toast.LENGTH_SHORT).show();
                     }
 
@@ -107,7 +115,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 
     }
 
-    public void settingSex(final int position) {
+    public void settingSex() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("请选择您的性别：");
         /*
@@ -128,7 +136,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         builder.show();
     }
 
-    public void settingSport(final int position) {
+    public void settingSport() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("请选择您的性别：");
         /*
@@ -154,12 +162,13 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         builder.setTitle("请输入" + str);
         final EditText editText = new EditText(getActivity());
         editText.setHint(hint);
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         builder.setView(editText);
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 weight = editText.getText().toString().trim();
-                settingMap.put(position, weight + hint);
+                settingMap.put(position, weight);
                 myListAdapter.notifyDataSetChanged();
             }
         });
@@ -203,7 +212,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        settingSex(position);
+                        settingSex();
 
                         break;
                     case 1:
@@ -216,7 +225,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                         settingWeight(position, "体重", "KG");
                         break;
                     case 4:
-                        settingSport(position);
+                        settingSport();
                         break;
 
 
@@ -233,7 +242,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         XUtils.xUtilsPost(WEBUtils.LookUserUrl, map, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d("mafuhua", "LookUserUrl======="+result);
+                Log.d("mafuhua", "LookUserUrl=======" + result);
 
                 parseJson(result);
             }
@@ -267,7 +276,9 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         settingMap.put(1, lookUserBean.data.get(0).birthday);
         settingMap.put(2, lookUserBean.data.get(0).height);
         settingMap.put(3, lookUserBean.data.get(0).weight);
-        settingMap.put(4, lookUserBean.data.get(0).sport);
+       /* sharedPreferences.edit().putString("birthday", lookUserBean.data.get(0).birthday)
+                .putString("height", lookUserBean.data.get(0).height)
+                .putString("weight", lookUserBean.data.get(0).weight).apply();*/
         if (lookUserBean.data.get(0).sport.equals("0")) {
             settingMap.put(4, "脑力劳动者");
         } else if (lookUserBean.data.get(0).sport.equals("1")) {
@@ -319,9 +330,9 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            if (settingMap.size()<1){
+            if (settingMap.size() < 1) {
                 viewHolder.tvsettingleft.setText(settingText[position]);
-            }else {
+            } else {
                 viewHolder.tvsettingleft.setText(settingText[position]);
                 viewHolder.tvsettingright.setText(settingMap.get(position));
             }
